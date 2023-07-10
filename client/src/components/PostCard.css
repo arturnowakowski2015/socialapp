@@ -1,0 +1,98 @@
+.postCardLabel,
+.wrapper,
+.likesAmount,
+.commentsContainer {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+.commentItem {
+  padding-left: 10px;
+} 
+.commentsContainer {
+  background-color: burlywood;
+  justify-content: space-between;
+}
+.inputText {
+  padding-left: 20px;
+}
+.commentsContainer {
+  justify-content: space-between;
+}
+.commentsContainer,
+.top,
+.description,
+.avatar {
+  margin: 10px;
+}
+.description {
+  word-wrap: break-word;
+  height: auto;
+  width: 80%;
+}
+.top {
+  background-color: rgb(192, 152, 152);
+  display: flex;
+}
+.cardContainer {
+  flex-direction: row;
+  border: black solid 1px;
+  margin: 10px;
+}
+.postPicture {
+  width: 100%;
+  height: 100%;
+}
+.f,
+.likestr,
+.likesAmount,
+.commentsText,
+.commentsLength {
+  padding-right: 5px;
+}
+.b {
+  position: relative;   
+  left: 10px;
+}  
+.avatar {
+  width: 20px; 
+  height: 20px;
+  border-radius: 50%;
+  flex: 1;
+}
+.email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 60px;
+  padding-left: 10px;
+  position: relative;
+  top: 20px;
+  flex: 6;
+}
+.addFriend {
+  flex: 3;
+  position: relative;
+  top: 20px;
+}
+.commentsLength {
+  flex: 1;
+  padding-left: 10px;
+}
+
+.commentslabel {
+  flex: 17;
+}
+.wrapper {
+  flex: 5;
+}
+
+.commentsList {
+  padding-left: 30px;
+}
+
+.item {
+  background-color: rgb(238, 218, 138);
+  margin: 10px;
+  width: 85%;
+}

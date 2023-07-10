@@ -1,0 +1,5 @@
+.commentsContainer {
+  display: flex;
+  flex-direction: row;
+}
+ 

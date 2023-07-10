@@ -1,0 +1,10 @@
+.commentsInput,
+.container {
+  display: flex;
+  flex-direction: row;
+}
+.leftbar,
+.centerbar,
+.rightbar {
+  width: 33%;
+}

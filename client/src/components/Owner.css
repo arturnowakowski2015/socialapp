@@ -1,0 +1,24 @@
+.icons,
+.nav {
+  display: flex;
+  flex-direction: row;
+}
+.f {
+  padding-left: 10px;
+}
+.label {
+  position: relative;
+  top: -5px;
+  left: 10px;
+}
+.alert {
+  width: 20px; 
+  height: 20px;
+  border-radius: 50%;
+  background-color: red;   
+  color: white;
+  position: relative;
+  text-align: center;
+  top: -25px;
+  left: 10px;
+}
