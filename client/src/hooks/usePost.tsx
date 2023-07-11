@@ -1,12 +1,12 @@
 import { Posts, User, PostInput } from "../data/Interface";
 import { useState } from "react";
+import {useReducer} from "react";
 
 const usePost = () => {
   const [posts, setPosts] = useState<Posts[]>();
   const [users, setUsers] = useState<User[]>();
   const [profile, setProfile] = useState<User>();
   const [post, setPost] = useState<PostInput>({} as PostInput);
-
   const createComment = async (user:User, post: Posts, comment: string, token: string) => {
     alert(user._id + ":u:" + comment);
     const response = await fetch(
@@ -42,6 +42,7 @@ const usePost = () => {
       },
     });
     const data = await response.json();
+
     console.log(
       "rrrrrrrrrrrrrrrrrrrrrrrrrrr               " + JSON.stringify(data)
     );

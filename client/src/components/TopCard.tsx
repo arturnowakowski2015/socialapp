@@ -36,7 +36,7 @@ const TopCard = ({ users, onlineUser, post, token, addFriend }: IProps) => {
       </div>{" "}
       {Number(onlineUser._id) !== post.userId && (
         <legend className="addFriend">
-          {onlineUser.friends.filter((t) => {
+          {onlineUser && onlineUser.friends && onlineUser.friends.filter((t) => {
             return t.toString() === post.userId.toString() && t;
           }).length === 0 ? (
             <div

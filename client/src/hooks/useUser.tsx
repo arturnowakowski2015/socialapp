@@ -1,5 +1,10 @@
 import { User, Login } from "../data/Interface";
+import {useFetch} from "./useFetch";
 import { useState } from "react";
+interface Data{
+  email:string;
+  password:string
+}
 const useAddFriend = (user: User) => {
   const [addedUser, setAddedUser] = useState<User>(user);
 
@@ -14,6 +19,7 @@ const useUser = () => {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [isLoggedIn, setIsLoggedIn] = useState(0);
   const [token, setToken] = useState<string>("");
+  const [result, setFetchAction] =useFetch();
   /*
   event.preventDefault(); if (selectedFile) {
     const formData = new FormData();
@@ -34,19 +40,11 @@ const useUser = () => {
     token: string,
     userId: number,
     parentFriend?: User
-  ) => {
-    alert(JSON.stringify(login) + userId);
-    const response = await fetch(
-      `http://localhost:3000/addfriend/${login && login.email}/${userId}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const loggedIn = await response.json();
+  ) => { 
+    setFetchAction({url:`http://localhost:3000/addfriend/${login && login.email}/${userId}`,
+  method:"patch",token:token})
+ 
+    const loggedIn = result;
     if (loggedIn) {
       setOnlineUser(loggedIn);
     }
@@ -54,23 +52,7 @@ const useUser = () => {
   const handleSubmit = async (selectedFile: File) => {
     setSelectedFile(selectedFile);
     alert(JSON.stringify(selectedFile));
-    /*
-  if (selectedFile) {
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-    try {
-      const response = await fetch("https://<server_ip>/api/v1/upload", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.ok) {
-        console.log("Upload successful");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  */
+ 
   };
 
   const register = async (data: User) => {
@@ -102,12 +84,13 @@ const useUser = () => {
       // this cannot be 'no-cors'
       headers: { "Content-Type": "application/json" },
       method: "POST",
-      body: JSON.stringify({ email: login.email, password: login.password }),
+      body: JSON.stringify({ email: login && login.user && login.user.email, password:login && login.user && login.user.password }),
     });
 
     const loggedIn = await response.json();
     if (loggedIn) {
       setLogin(loggedIn);
+      alert(JSON.stringify)
       setUser(loggedIn.user[0]);
       setOnlineUser(loggedIn.user[0]);
       setToken(loggedIn.token);
@@ -116,8 +99,11 @@ const useUser = () => {
   };
 
   const setUserLogin = (el: string, value: string) => {
-    if (el) setLogin({ ...login, [el]: value });
+    if (el) setLogin({ ...login,user:{...login.user, [el]: value }});
   };
+
+ 
+
   const setUserData = (el: string, value: string) => {
     setUser({ ...user, [el]: value });
   };

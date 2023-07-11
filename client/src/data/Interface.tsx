@@ -1,3 +1,6 @@
+
+
+
 export interface IFile {
   url: string;
   name: string;
@@ -17,7 +20,18 @@ export interface PostInput {
 }
 export interface Likes {
   [id: string]: boolean;
-}
+}type State = {
+    data?: JSONResult;
+    isLoading: boolean;
+    error?: string;
+   }
+   
+   export type JSONResult = User | Login | Posts | User[] | Posts[];
+
+   type Action =
+ | { type: 'request' }
+ | { type: 'success', results: JSONResult }
+ | { type: 'failure', error: string };
 export interface User {
   _id: string;
   firstName: string;
@@ -35,21 +49,8 @@ export interface User {
   comments: string[];
 }
 export interface Login {
-  email: string;
-  password: string;
-  token: string;
-  _id: string;
-  firstName: string;
-  lastName: string;
-  friends: string[];
-  location: String;
-  description: string;
-  picturePath: string;
-  ocupation: string;
-  viewedProfile: number;
-  impresions: number;
-  likes: Likes[];
-  comments: string[];
+  user:User;
+  token: string; 
 }
 export interface Posts {
   _id: number;

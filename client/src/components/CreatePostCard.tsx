@@ -5,15 +5,17 @@ interface IProps {
   onlineUser: User;
   setInput: (str: string, str2: string, onlineUser: User) => void;
   sendPost: (token: string, onlineUser: User) => void;
+  socket:Object;
 } 
 const CreateCommentCard = ({
   token,
   setInput,
   sendPost,
   onlineUser,
+  socket
 }: IProps) => {
   return (
-    <div className="card">
+    <div className="card"> 
       <div className="commentsInput">
         <div>
           <div className="text">
@@ -21,7 +23,7 @@ const CreateCommentCard = ({
               onChange={(e) =>
                 setInput("input", e.currentTarget.value, onlineUser)   
               }  
-            ></textarea> 
+            ></textarea>   
           </div>
           <div className="imageInput">  
             <input

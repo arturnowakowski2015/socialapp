@@ -1,0 +1,15 @@
+Set-ExecutionPolicy Unrestricted
+npm install 
+
+ npm i express body-parser cors dotenv multer helmet morgan http bcrypt jsonwebtoken path -g nodemon
+
+npm i react react-dom react   react-router-dom  --save-dev @types/react-dom   socket.io-client
+ 
+
+io.on("connection", (socket) => {
+  console.log("Made socket connection");
+});
+app.set("socketio", io)
+
+  req.app.get('socketio').emit('message_from_likes', `user ${usersarr[usersarr.findIndex((t)=>t._id==uid)].email} like your 
+    post ${posts[posts.findIndex((t)=>t._id === Number(postid) )].description}`)

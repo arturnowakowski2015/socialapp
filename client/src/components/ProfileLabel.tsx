@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { User } from "../data/Interface";
+import { Login, User } from "../data/Interface";
 import useProfileLabel from "../hooks/useProfileLabel";
 interface IProps {
   user?: User;
   changeProfile: (user: User, token: string, url: string) => void;
-  login: User;
+  login: Login;
 }
 const ProfileLabel = ({ user, login, changeProfile }: IProps) => {
   const [friends, setFriends] = useProfileLabel();
@@ -27,7 +27,7 @@ const ProfileLabel = ({ user, login, changeProfile }: IProps) => {
                   onClick={(e) => {
                     changeProfile(
                       user,
-                      login.password,
+                      login && login.user && login.user.password,
                       "http://localhost:3000/users/" + user._id
                     );
                   }}
