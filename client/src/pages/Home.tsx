@@ -1,12 +1,14 @@
-import usePost from "../hooks/usePost";
+import { usePost } from "../hooks/usePost";
+import { useUser } from "../hooks/useUser";
 import { useEffect, useState, useReducer } from "react";
-import { User, Login, Notifications } from "../data/Interface";
+import { User, Login, Notifications, Posts } from "../data/Interface";
 import PostCard from "../components/PostCard";
 import ProfileLabel from "../components/ProfileLabel";
 import Owner from "../components/Owner";
 import CreatePostCard from "../components/CreatePostCard";
 import io from "socket.io-client";
 import useNotifications from "../hooks/useNotifications";
+import GenericList from "../components/GenericList";
 import { reducer, Action } from "../hooks/useNotificationReducer";
 
 import "./Home.css";
@@ -21,21 +23,14 @@ interface IProps {
   login: Login;
   onlineUser: User;
   token: string;
-  addFriend: (
-    login: User,
-    token: string,
-    userId: number,
-    parentFriend?: User
-  ) => void;
 }
-const Home = ({ user, login, onlineUser, token, addFriend }: IProps) => {
+const Home = ({ user, login, onlineUser, token }: IProps) => {
   const [
     posts,
-    users,
+    loader,
     profile,
     setProfile,
     getPosts,
-    getUsers,
     changeProfile,
     getPostOfUser,
     doLikes,
@@ -43,21 +38,46 @@ const Home = ({ user, login, onlineUser, token, addFriend }: IProps) => {
     sendPost,
     createComment,
   ] = usePost();
+  const [users, loaderUser, getUsers, addFriend] = useUser();
   const [refreshPosts, setRefreshPosts] = useState<boolean>(false);
   const [notifications, setNotifications, socket, setSocket] =
     useNotifications();
-  const refresh = () => setRefreshPosts(true);
+  const refresh = () => {
+    dispatch({ type: "resetPost" });
+    setRefreshPosts(true);
+  };
   useEffect(() => {
-    getPosts(login.token, "http://localhost:3000/p");
-    getUsers(login.token, "http://localhost:3000/users");
+    getPosts({
+      type: "get",
+      data: [],
+      token: login.token,
+      url: "http://localhost:3000/p",
+    });
+    getUsers({
+      type: "get",
+      data: [],
+      token: login.token,
+      url: "http://localhost:3000/users",
+    });
 
     setProfile(user);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    getPosts(login.token, "http://localhost:3000/p");
-    getUsers(login.token, "http://localhost:3000/users");
-    setNotifications({ users: [], likes: [], comments: [], posts: [] });
+    getPosts({
+      type: "get",
+      data: [],
+      token: login.token,
+      url: "http://localhost:3000/p",
+    });
+    getUsers({
+      type: "get",
+      data: [],
+      token: login.token,
+      url: "http://localhost:3000/users",
+    });
+    setRefreshPosts(false);
+    alert("true");
   }, [refreshPosts]); // eslint-disable-line react-hooks/exhaustive-deps
   const [state, dispatch] = useReducer(reducer, {
     users: [],
@@ -129,25 +149,25 @@ const Home = ({ user, login, onlineUser, token, addFriend }: IProps) => {
               onlineUser={onlineUser}
               socket={socket}
             />
-            {posts &&
-              posts.map((t) => {
-                return (
-                  <PostCard
-                    post={t}
-                    users={users}
-                    login={login}
-                    doLikes={doLikes}
-                    onlineUser={onlineUser}
-                    token={token}
-                    addFriend={addFriend}
-                    createComment={createComment}
-                  />
-                );
-              })}
+            <GenericList
+              items={posts}
+              childComp={
+                <PostCard
+                  item={{} as Posts}
+                  users={users}
+                  login={login}
+                  doLikes={doLikes}
+                  onlineUser={onlineUser}
+                  token={token}
+                  addFriend={addFriend}
+                  createComment={createComment}
+                />
+              }
+            />
           </div>
         </div>
         <div className="rightbar">
-          {users?.map((t) => {
+          {users?.map((t: any) => {
             return (
               <div
                 onClick={(e) => {

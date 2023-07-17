@@ -4,29 +4,36 @@ import CenterCard from "./CenterCard";
 import TopCard from "./TopCard";
 import "./PostCard.css";
 interface IProps {
-  post: Posts;
+  item: Posts;
+
   users?: User[];
   login: Login;
   onlineUser: User;
   token: string;
   doLikes: (postid: number, token: string, userid?: number) => void;
- 
+
   addFriend: (
-    login: User, 
+    login: User,
     token: string,
     userId: number,
     parentFriend?: User
   ) => void;
-  createComment: (onlineUser:User, post: Posts, token: string, str: string) => void;
+  createComment: (
+    onlineUser: User,
+    post: Posts,
+    token: string,
+    str: string
+  ) => void;
 }
 const PostCard = ({
-  post,
+  item,
+
   users,
-  login, 
+  login,
   onlineUser,
   token,
   doLikes,
- 
+
   addFriend,
   createComment,
 }: IProps) => {
@@ -35,23 +42,22 @@ const PostCard = ({
       <TopCard
         users={users}
         onlineUser={onlineUser}
-        post={post}
+        post={item}
         addFriend={addFriend}
         token={token}
       />
       <hr></hr>
-      <CenterCard post={post} />
+      <CenterCard post={item} />
       <hr></hr>
 
-      <BottomCard  
-            onlineUser={onlineUser}
-        post={post}
+      <BottomCard
+        onlineUser={onlineUser}
+        post={item}
         users={users}
         token={token}
         login={login}
         doLikes={doLikes}
         createComment={createComment}
-
       />
     </div>
   );

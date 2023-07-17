@@ -5,39 +5,33 @@ import Home from "./pages/Home";
 import LoginPage from "./components/LoginPage";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
-import { useUser } from "./hooks/useUser";
+import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
   const [
-    register,
-    pageType,
     login,
     user,
-    isLoggedIn,
     loginUser,
+    isLoggedIn,
     onlineUser,
     token,
     setUserLogin,
-    setUserData,
+    register,
     handleSubmit,
-    addFriend,
-    setPageType,
-  ] = useUser();
+    setUserData,
+  ] = useAuth();
   const navigate = useNavigate();
 
-   useEffect(() => {
-    navigate("/login"); 
- 
- 
-
+  useEffect(() => {
+    navigate("/login");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
- 
+
   return (
     <div className="app">
       /{JSON.stringify(user)}/{" "}
       {isLoggedIn === 0 ? (
         <Routes>
-          <Route 
+          <Route
             path="/login"
             element={
               <LoginPage
@@ -67,10 +61,8 @@ const App = () => {
                 <Home
                   user={user}
                   login={login}
-                  addFriend={addFriend}
                   onlineUser={onlineUser}
                   token={token}
- 
                 />
               }
             />

@@ -99,7 +99,7 @@ const getUserFromIo = (username) => {
   return onlineUsers.find((user) => user.username === username);
 };
 
-app.post("/auth/register/:userid", upload.single("picture"), register);
+app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */

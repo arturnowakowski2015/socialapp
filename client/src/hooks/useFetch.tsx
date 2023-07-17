@@ -1,59 +1,74 @@
-import {useEffect, useState} from "react"
-import {JSONResult} from "./useApiReducer";
-type fetchActionKind = 
-    "get" | "patch" | "post" |""
-   
-    export interface fetchActionSet {
-      type:fetchActionKind;
-      url?: RequestInfo | URL ;
-      token?:string;
-      data:JSONResult;
-    }
-
-export const useFetch = () =>{ 
-const [fetchAction, setFetchAction]=useState<fetchActionSet>({
-    type:"",
-    url: "localhost:3000",
-    token:"",
-    data:[]
-  } as fetchActionSet)
-let result:any=[]
-useEffect(() => {
-  const f = async()=>{
-    switch (fetchAction && fetchAction.type) {
-        case 'get':
-          return  await fetch( fetchAction.url!   , {
-            // this cannot be 'no-cors'
-            method: "GET",
-            headers: { Authorization: `Bearer ${fetchAction.token}` },
-          }).then(response=>response.json())
-         
-        case 'patch':
-          return  await fetch(
-            fetchAction.url!,
-            {
-              method: "PATCH",
-              headers: {
-                Authorization: `Bearer ${fetchAction.token}`,
-                "Content-Type": "application/json",
-              },
-            }
-          ).then(response=>response.json())
-      
-        case 'post':
-          return  await fetch(fetchAction.url!, {
-            // this cannot be 'no-cors'
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            body: JSON.stringify(fetchAction.data),
-          }).then(response=> response.json())
-          case '':return {}
-             
-        }
-    }
- 
-    result =f();
- }, [fetchAction]);
-    
-return [result, setFetchAction];
+import { fetchActionSet } from "../data/Interface";
+import { JSONResult } from "../data/Interface";
+import { useState } from "react";
+enum fetchActionKind {
+  GET = "GET",
+  POST = "POST",
+  PATCH = "PATCH",
 }
+export interface fetchActionType {
+  type: fetchActionKind;
+  url: string;
+  token: string;
+  postid?: string;
+  userid?: string;
+  data: any;
+}
+
+// An interface for our actions
+interface fetchState {
+  data: JSONResult;
+}
+const useFetch = () => {
+  const [data, setData] = useState<JSONResult>([] as JSONResult);
+  const [loader, setLoader] = useState<boolean>(false);
+  const setParams = async (action: fetchActionSet) => {
+    switch (action.type) {
+      case "get":
+        setLoader(true);
+        const response1 = await fetch(action && (action.url as string), {
+          // this cannot be 'no-cors'
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${action && action.token}`,
+          },
+        });
+
+        const t = await response1.json();
+        setData(t);
+
+        setLoader(false);
+        return t;
+      case "patch":
+        setLoader(true);
+        const response2 = await fetch(action && (action.url as string), {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${action.token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const t2 = await response2.json();
+
+        setLoader(false);
+        return t2;
+      case "post":
+        setLoader(true);
+        const response3 = await fetch(action && (action.url as string), {
+          // this cannot be 'no-cors'
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify(action.data),
+        });
+
+        const t3 = await response3.json();
+
+        setLoader(false);
+        return t3;
+    }
+  };
+  return [loader, setParams] as const;
+};
+
+export default useFetch;

@@ -1,16 +1,13 @@
-
-
-
 export interface IFile {
   url: string;
   name: string;
 }
 export interface Notifications {
-  users:string[]
-  likes:string[];
-  comments:string[];
-  posts:string[];
-} 
+  users: string[];
+  likes: string[];
+  comments: string[];
+  posts: string[];
+}
 
 export interface PostInput {
   input: string;
@@ -20,18 +17,19 @@ export interface PostInput {
 }
 export interface Likes {
   [id: string]: boolean;
-}type State = {
-    data?: JSONResult;
-    isLoading: boolean;
-    error?: string;
-   }
-   
-   export type JSONResult = User | Login | Posts | User[] | Posts[];
+}
+type State = {
+  data?: JSONResult;
+  isLoading: boolean;
+  error?: string;
+};
 
-   type Action =
- | { type: 'request' }
- | { type: 'success', results: JSONResult }
- | { type: 'failure', error: string };
+export type JSONResult = User | Login | Posts | User[] | Posts[];
+
+type Action =
+  | { type: "request" }
+  | { type: "success"; results: JSONResult }
+  | { type: "failure"; error: string };
 export interface User {
   _id: string;
   firstName: string;
@@ -49,8 +47,8 @@ export interface User {
   comments: string[];
 }
 export interface Login {
-  user:User;
-  token: string; 
+  user: User;
+  token: string;
 }
 export interface Posts {
   _id: number;
@@ -63,4 +61,11 @@ export interface Posts {
   userPicturePath: string;
   likes: Likes[];
   comments: string[];
+}
+type fetchActionKind = "get" | "patch" | "post" | "";
+export interface fetchActionSet {
+  type: fetchActionKind;
+  url?: RequestInfo | URL;
+  token?: string;
+  data: JSONResult;
 }

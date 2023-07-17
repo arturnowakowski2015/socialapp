@@ -9,12 +9,6 @@ interface IProps {
 }
 
 const Owner = ({ refresh, notifications, login }: IProps) => {
-  const [state, dispatch] = useReducer(reducer, {
-    users: [],
-    likes: [],
-    comments: [],
-    posts: [],
-  });
   return (
     <div className="nav">
       <div className="icons">
@@ -27,7 +21,7 @@ const Owner = ({ refresh, notifications, login }: IProps) => {
               <div
                 className="alert"
                 onClick={() => {
-                  dispatch({ type: "resetPost" });
+                  refresh();
                 }}
               >
                 {notifications &&
@@ -38,13 +32,8 @@ const Owner = ({ refresh, notifications, login }: IProps) => {
         </i>
 
         <i className="f fa-regular fa-user">
-          {state.users.length !== 0 && (
-            <div
-              className="alert"
-              onClick={() => {
-                dispatch({ type: "resetUsers" });
-              }}
-            >
+          {notifications.users.length !== 0 && (
+            <div className="alert" onClick={() => {}}>
               {notifications &&
                 notifications.users &&
                 notifications.users.length}
@@ -52,13 +41,8 @@ const Owner = ({ refresh, notifications, login }: IProps) => {
           )}
         </i>
         <i className="f fa-regular fa-heart">
-          {state.likes.length !== 0 && (
-            <div
-              className="alert"
-              onClick={() => {
-                dispatch({ type: "resetLikes" });
-              }}
-            >
+          {notifications.likes.length !== 0 && (
+            <div className="alert" onClick={() => {}}>
               {notifications &&
                 notifications.likes &&
                 notifications.likes.length}
@@ -66,13 +50,8 @@ const Owner = ({ refresh, notifications, login }: IProps) => {
           )}
         </i>
         <i className="f fa-regular fa-comment">
-          {state.comments.length !== 0 && (
-            <div
-              className="alert"
-              onClick={() => {
-                dispatch({ type: "resetComments" });
-              }}
-            >
+          {notifications.comments.length !== 0 && (
+            <div className="alert" onClick={() => {}}>
               {notifications &&
                 notifications.comments &&
                 notifications.comments.length}

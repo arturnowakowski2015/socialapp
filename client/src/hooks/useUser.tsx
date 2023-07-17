@@ -1,10 +1,8 @@
 import { User, Login } from "../data/Interface";
-import {useFetch} from "./useFetch";
+import useFetch from "./useFetch";
 import { useState } from "react";
-interface Data{
-  email:string;
-  password:string
-}
+import { fetchActionSet } from "../data/Interface";
+
 const useAddFriend = (user: User) => {
   const [addedUser, setAddedUser] = useState<User>(user);
 
@@ -13,13 +11,13 @@ const useAddFriend = (user: User) => {
 
 const useUser = () => {
   const [pageType, setPageType] = useState<string>("register");
+  const [loaderUser, setLoaderUser] = useState<boolean>(false);
   const [onlineUser, setOnlineUser] = useState<User>({} as User);
-  const [login, setLogin] = useState<Login>({} as Login);
-  const [user, setUser] = useState<User>({} as User);
-  const [selectedFile, setSelectedFile] = useState<File>();
   const [isLoggedIn, setIsLoggedIn] = useState(0);
-  const [token, setToken] = useState<string>("");
-  const [result, setFetchAction] =useFetch();
+
+  const [users, setUsers] = useState<User[]>([] as User[]);
+
+  const [loader, setParams] = useFetch();
   /*
   event.preventDefault(); if (selectedFile) {
     const formData = new FormData();
@@ -34,94 +32,43 @@ const useUser = () => {
     }
 }
 */
+  const getUsers = async (ac: fetchActionSet) => {
+    setLoaderUser(true);
 
+    setUsers(
+      (await setParams({
+        type: "get",
+        url: ac.url,
+        token: ac.token,
+        data: [],
+      })) as User[]
+    );
+
+    setLoaderUser(false);
+  };
   const addFriend = async (
     login: User,
     token: string,
     userId: number,
     parentFriend?: User
-  ) => { 
-    setFetchAction({url:`http://localhost:3000/addfriend/${login && login.email}/${userId}`,
-  method:"patch",token:token})
- 
-    const loggedIn = result;
-    if (loggedIn) {
-      setOnlineUser(loggedIn);
-    }
-  };
-  const handleSubmit = async (selectedFile: File) => {
-    setSelectedFile(selectedFile);
-    alert(JSON.stringify(selectedFile));
- 
-  };
-
-  const register = async (data: User) => {
-    const response = await fetch("http://localhost:3000/auth/register/"+data._id, {
-      // this cannot be 'no-cors'
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(data),
-    });
- 
-    const savedUser = await response.json();
-    alert("aaa   " + JSON.stringify(savedUser));
-    let pt = "/";
-
-    if (savedUser && savedUser.message !== "already exists user") { 
-      alert("saved");
-      pt = "login";
-      setPageType(pt);
-    }
+  ) => {
+    const res = await fetch(
+      `http://localhost:3000/addfriend/${login && login.email}/${userId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const response = await fetch("/movies");
+    const movies = await response.json();
+    return movies;
+    alert(JSON.stringify(res));
+    const loggedIn = await res.json();
   };
 
-  const loginUser = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    login: Login
-  ): Promise<void> => {
-    e.preventDefault();
-
-    const response = await fetch("http://localhost:3000/login", {
-      // this cannot be 'no-cors'
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({ email: login && login.user && login.user.email, password:login && login.user && login.user.password }),
-    });
-
-    const loggedIn = await response.json();
-    if (loggedIn) {
-      setLogin(loggedIn);
-      alert(JSON.stringify)
-      setUser(loggedIn.user[0]);
-      setOnlineUser(loggedIn.user[0]);
-      setToken(loggedIn.token);
-      setIsLoggedIn(1);
-    }
-  };
-
-  const setUserLogin = (el: string, value: string) => {
-    if (el) setLogin({ ...login,user:{...login.user, [el]: value }});
-  };
-
- 
-
-  const setUserData = (el: string, value: string) => {
-    setUser({ ...user, [el]: value });
-  };
-  return [
-    register,
-    pageType,
-    login,
-    user,
-    isLoggedIn,
-
-    loginUser,
-    onlineUser,
-    token,
-    setUserLogin,
-    setUserData,
-    handleSubmit,
-    addFriend,
-    setPageType,
-  ] as const;
+  return [users, loaderUser, getUsers, addFriend] as const;
 };
 export { useUser, useAddFriend };
