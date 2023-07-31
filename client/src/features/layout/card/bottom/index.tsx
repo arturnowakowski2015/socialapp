@@ -1,0 +1,1 @@
+export { BottomCard } from "./BottomCard";
