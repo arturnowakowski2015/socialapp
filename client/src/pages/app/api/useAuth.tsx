@@ -1,5 +1,7 @@
+import { useRegister } from "./useRegister";
 import { useState } from "react";
 import { Login, User } from "../../../model/Interface";
+
 const useAuth = () => {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [token, setToken] = useState<string>("");
@@ -7,27 +9,20 @@ const useAuth = () => {
   const [user, setUser] = useState<User>({} as User);
   const [onlineUser, setOnlineUser] = useState<User>({} as User);
   const [isLoggedIn, setIsLoggedIn] = useState(0);
-
+  let e: boolean = false;
+  const { mutator } = useRegister();
   const handleSubmit = async (selectedFile: File) => {
     setSelectedFile(selectedFile);
-    alert(JSON.stringify(selectedFile));
   };
 
-  const register = async (data: User) => {
-    const response = await fetch("http://localhost:3000/auth/register", {
-      // this cannot be 'no-cors'
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+  const register = (data: User) => {
+    mutator.mutate(data);
 
-    const savedUser = await response.json();
-    alert("aaa   " + JSON.stringify(savedUser));
-    let pt = "/";
-
-    if (savedUser && savedUser.message !== "already exists user") {
+    alert(" ddd  " + JSON.stringify(mutator));
+    /* if (savedUser && savedUser.message !== "already exists user") {
       alert("saved");
     }
+    */
   };
 
   const loginUser = async (
@@ -65,7 +60,7 @@ const useAuth = () => {
     setUser({ ...user, [el]: value });
   };
 
-  return [
+  return {
     login,
     user,
     loginUser,
@@ -76,6 +71,6 @@ const useAuth = () => {
     register,
     handleSubmit,
     setUserData,
-  ] as const;
+  } as const;
 };
 export { useAuth };

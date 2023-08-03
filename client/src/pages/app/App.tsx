@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import { useAuth } from "./api/useAuth";
 
 export const App = () => {
-  const [
+  const {
     login,
     user,
     loginUser,
@@ -19,7 +19,7 @@ export const App = () => {
     register,
     handleSubmit,
     setUserData,
-  ] = useAuth();
+   } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -52,13 +52,14 @@ app.use(
   })
 );
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-const serv = app.listen(3002);
+/*const serv = app.listen(3002);
 const io = new Server(serv, {
   cors: {
     "Access-Control-Allow-Origin": "http://localhost:3002:*",
     "Access-Control-Request-Method": "*",
   },
 });
+
 io.on("connection", async (socket) => {
   socket.on("message_about_userid", (userid) => {
     socketids.set(userid.uid, socket.id);
@@ -66,11 +67,12 @@ io.on("connection", async (socket) => {
     /*
     req.app.get('socketio').to(socketids.get(usersarr[usersarr.findIndex((t)=>{t.email===email})]._id)).emit('message_from_likes',
     `user ${email} has logged`)
-    */
+   
     console.log("Made socket connection");
   });
 });
-app.set("socketio", io);
+*/
+//app.set("socketio", io);
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
@@ -99,7 +101,7 @@ const getUserFromIo = (username) => {
   return onlineUsers.find((user) => user.username === username);
 };
 
-app.post("/auth/register", upload.single("picture"), register);
+app.put("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
@@ -128,7 +130,3 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
 // next line is the money
-
-io.on("connect_error", (err) => {
-  console.log(`connect_error due to ${err.message}`);
-});

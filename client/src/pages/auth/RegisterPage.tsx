@@ -5,7 +5,7 @@ import "./Auth.css";
 interface IProps {
   user: User;
   setUserData: (el: string, value: string) => void;
-  register: (data: User) => Promise<void>;
+  register: (data: User) => void;
 }
 export const RegisterPage = ({ setUserData, register, user }: IProps) => {
   const navigate = useNavigate();
@@ -64,6 +64,7 @@ export const RegisterPage = ({ setUserData, register, user }: IProps) => {
               setUserData("picturePath", e.split("\\")[2]);
             }}
           />
+          .{JSON.stringify(user)}.
           <button
             onClick={() => {
               register(user);

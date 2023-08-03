@@ -2,12 +2,12 @@ import express from "express";
 import { usersarr, posts, socketids } from "../data/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 const router = express.Router();
 export const loginUser = async (req, res) => {
- 
   try {
     const { email, password } = req.body;
- 
+
     const user = usersarr.filter((t) => {
       return t.email === email && t;
     });
@@ -22,9 +22,7 @@ export const loginUser = async (req, res) => {
     res.status(200).json({ token, user });
   } catch (err) {
     res.status(500).json({ error: err.message });
-  } 
-
-
+  }
 };
 export const register = async (req, res) => {
   try {
@@ -38,6 +36,7 @@ export const register = async (req, res) => {
       location,
       occupation,
     } = req.body;
+    console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -45,14 +44,15 @@ export const register = async (req, res) => {
       usersarr.filter((t) => {
         return t.email === email || (t.password === password && t);
       }).length > 0
-    )
+    ) {
       res.status(404).json({ message: "already exists user" });
-    else {
+      console.log(1111111);
+    } else {
       usersarr.push({
         _id: new Date().getTime(),
         firstName,
         lastName: "sssssss",
-        email:email,
+        email: email,
         password: passwordHash,
         picturePath,
         friends: [],
@@ -61,16 +61,20 @@ export const register = async (req, res) => {
         viewedProfile: Math.floor(Math.random() * 10000),
         impressions: Math.floor(Math.random() * 10000),
       });
- 
-      res.status(201).json(
+
+      res.status(201).json({
+        data: usersarr.filter((t) => {
+          return t.email === email && t;
+        })[0],
+      });
+      console.log(
         usersarr.filter((t) => {
           return t.email === email && t;
         })[0]
       );
     }
-    console.log(9999)
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "dddddd" });
   }
 };
 
