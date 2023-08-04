@@ -1,5 +1,5 @@
 import { useRegister } from "./useRegister";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Login, User } from "../../../model/Interface";
 
 const useAuth = () => {
@@ -16,15 +16,19 @@ const useAuth = () => {
   };
 
   const register = (data: User) => {
+    // console.log(data, mutator);
     mutator.mutate(data);
+    // alert(" ddd  " + JSON.stringify(data));
 
-    alert(" ddd  " + JSON.stringify(mutator));
+    //alert(" ddd  " + JSON.stringify(mutator));
     /* if (savedUser && savedUser.message !== "already exists user") {
       alert("saved");
     }
     */
   };
-
+  const [startedloggedin, setStartedloggedin] = useState<string[]>(
+    [] as string[]
+  );
   const loginUser = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     login: Login
@@ -44,11 +48,11 @@ const useAuth = () => {
     const loggedIn = await response.json();
     if (loggedIn) {
       setLogin(loggedIn);
-      alert(JSON.stringify);
-      setUser(loggedIn.user[0]);
-      setOnlineUser(loggedIn.user[0]);
+      setUser(loggedIn && loggedIn.user && loggedIn.user[0]);
+      setOnlineUser(loggedIn && loggedIn.user && loggedIn.user[0]);
       setToken(loggedIn.token);
       setIsLoggedIn(1);
+      setStartedloggedin(loggedIn.online);
     }
   };
 
@@ -59,8 +63,17 @@ const useAuth = () => {
   const setUserData = (el: string, value: string) => {
     setUser({ ...user, [el]: value });
   };
-
+  const [registerstatus, setRegisterstatus] = useState<string>("");
+  useEffect(() => {
+    setRegisterstatus("Successfully registered !!");
+    const t = setTimeout(() => {
+      setRegisterstatus("");
+    }, 2500);
+    return () => clearTimeout(t);
+  }, [mutator.isSuccess]);
   return {
+    startedloggedin,
+    registerstatus,
     login,
     user,
     loginUser,

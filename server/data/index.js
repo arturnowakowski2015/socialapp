@@ -1,5 +1,4 @@
-export const socketids= new Map([[]])
-
+export const socketids = new Map([[]]);
 
 export const userIds = [
   Math.floor(Math.random() * 100000),
@@ -30,6 +29,7 @@ export const usersarr = [
     impressions: 888822,
     createdAt: 1115211422,
     updatedAt: 1115211422,
+    online: false,
     __v: 0,
   },
   {
@@ -45,6 +45,8 @@ export const usersarr = [
     viewedProfile: 12351,
     impressions: 55555,
     createdAt: 1595589072,
+    online: false,
+
     updatedAt: 1595589072,
     __v: 0,
   },
@@ -61,6 +63,8 @@ export const usersarr = [
     viewedProfile: 45468,
     impressions: 19986,
     createdAt: 1288090662,
+    online: false,
+
     updatedAt: 1288090662,
     __v: 0,
   },
@@ -77,6 +81,8 @@ export const usersarr = [
     viewedProfile: 41024,
     impressions: 55316,
     createdAt: 1219214568,
+    online: false,
+
     updatedAt: 1219214568,
     __v: 0,
   },
@@ -93,6 +99,8 @@ export const usersarr = [
     viewedProfile: 40212,
     impressions: 7758,
     createdAt: 1493463661,
+    online: false,
+
     updatedAt: 1493463661,
     __v: 0,
   },
@@ -109,6 +117,8 @@ export const usersarr = [
     viewedProfile: 976,
     impressions: 4658,
     createdAt: 1381326073,
+    online: false,
+
     updatedAt: 1381326073,
     __v: 0,
   },
@@ -125,6 +135,8 @@ export const usersarr = [
     viewedProfile: 1510,
     impressions: 77579,
     createdAt: 1714704324,
+    online: false,
+
     updatedAt: 1642716557,
     __v: 0,
   },
@@ -141,10 +153,11 @@ export const usersarr = [
     viewedProfile: 19420,
     impressions: 82970,
     createdAt: 1369908044,
+    online: false,
+
     updatedAt: 1359322268,
     __v: 0,
   },
-   
 ];
 
 export const posts = [
@@ -161,7 +174,7 @@ export const posts = [
     comments: [
       "random comment",
       "another random comment",
-      "yet another random comment",   
+      "yet another random comment",
     ],
   },
   {

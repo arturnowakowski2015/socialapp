@@ -1,17 +1,21 @@
 import useFetch from "./useFetch";
 import { useState } from "react";
 import { User, fetchActionSet } from "../../../model/Interface";
-
+import { useQuery } from "@tanstack/react-query";
+import { getUsersQuery } from "../../../utils/users";
 const useAddFriend = (user: User) => {
   const [addedUser, setAddedUser] = useState<User>(user);
 
   return [addedUser, setAddedUser] as const;
 };
 
-const useUser = () => {
+const useUser = (token: string) => {
   const [loaderUser, setLoaderUser] = useState<boolean>(false);
 
-  const [users, setUsers] = useState<User[]>([] as User[]);
+  const { data: users } = useQuery({
+    queryKey: ["groups", loaderUser],
+    queryFn: () => getUsersQuery(token),
+  });
 
   const { loader, setParams } = useFetch();
   /*
@@ -28,19 +32,13 @@ const useUser = () => {
     }
 }
 */
-  const getUsers = async (ac: fetchActionSet) => {
-    setLoaderUser(true);
-
-    setUsers(
-      (await setParams({
-        type: "get",
-        url: ac.url,
-        token: ac.token,
-        data: [],
-      })) as User[]
-    );
-
-    setLoaderUser(false);
+  const [loggedin, setLoggedin] = useState<string[]>([] as string[]);
+  const loginmessage = (online: string[]) => {
+    setLoggedin(online);
+    alert(JSON.stringify(online));
+  };
+  const getUsers = async () => {
+    setLoaderUser(!loaderUser);
   };
   const addFriend = async (
     login: User,
@@ -60,6 +58,14 @@ const useUser = () => {
     );
   };
 
-  return { users, loaderUser, loader, getUsers, addFriend } as const;
+  return {
+    loggedin,
+    users,
+    loaderUser,
+    loader,
+    getUsers,
+    addFriend,
+    loginmessage,
+  } as const;
 };
 export { useUser, useAddFriend };

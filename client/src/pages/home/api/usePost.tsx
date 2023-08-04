@@ -46,10 +46,8 @@ const usePost = () => {
         data: [],
       })) as Posts[]
     );
-    alert("posts   " + JSON.stringify(posts));
   };
   const sendPost = async (token: string, onlineUser: User) => {
-    alert("kkk" + onlineUser.picturePath + "patg" + post.imagePath);
     const response = await fetch(`http://localhost:3000/createpost`, {
       method: "PATCH",
       body: JSON.stringify({

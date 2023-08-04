@@ -19,12 +19,19 @@ interface Data {
   flag1: number;
 }
 interface IProps {
+  startedloggedin: string[];
   user: User;
   login: Login;
   onlineUser: User;
   token: string;
 }
-export const Home = ({ user, login, onlineUser, token }: IProps) => {
+export const Home = ({
+  startedloggedin,
+  user,
+  login,
+  onlineUser,
+  token,
+}: IProps) => {
   const {
     posts,
     profile,
@@ -37,7 +44,8 @@ export const Home = ({ user, login, onlineUser, token }: IProps) => {
     sendPost,
     createComment,
   } = usePost();
-  const { users, loaderUser, getUsers, addFriend } = useUser();
+  const { loggedin, users, loaderUser, getUsers, addFriend, loginmessage } =
+    useUser(token);
   const [refreshPosts, setRefreshPosts] = useState<boolean>(false);
   const [notifications, setNotifications, socket, setSocket] =
     useNotifications();
@@ -52,12 +60,7 @@ export const Home = ({ user, login, onlineUser, token }: IProps) => {
       token: login.token,
       url: "http://localhost:3000/p",
     });
-    getUsers({
-      type: "get",
-      data: [],
-      token: login.token,
-      url: "http://localhost:3000/users",
-    });
+    getUsers();
 
     setProfile(user);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -69,14 +72,8 @@ export const Home = ({ user, login, onlineUser, token }: IProps) => {
       token: login.token,
       url: "http://localhost:3000/p",
     });
-    getUsers({
-      type: "get",
-      data: [],
-      token: login.token,
-      url: "http://localhost:3000/users",
-    });
+    getUsers();
     setRefreshPosts(false);
-    alert("true");
   }, [refreshPosts]); // eslint-disable-line react-hooks/exhaustive-deps
   const [state, dispatch] = useReducer(reducer, {
     users: [],
@@ -102,12 +99,16 @@ export const Home = ({ user, login, onlineUser, token }: IProps) => {
     socketIo.on("message_from_posts", (data) =>
       dispatch({ type: "posts", onlineUser: onlineUser, data: data })
     );
+    socketIo.on("message_from_register", () => getUsers());
+    socketIo.on("message_from_login", (online) => loginmessage(online));
 
     socketIo.on("disconnect", function () {
       console.log("disconnect");
     });
 
-    socketIo.emit("message_about_userid", { uid: onlineUser._id });
+    socketIo.emit("message_about_userid", {
+      uid: onlineUser && onlineUser._id,
+    });
 
     return () => {
       socketIo.removeListener("message_from_posts");
@@ -119,7 +120,9 @@ export const Home = ({ user, login, onlineUser, token }: IProps) => {
   useEffect(() => {
     setProfile(user);
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
-
+  useEffect(() => {
+    getUsers();
+  }, [onlineUser]);
   return (
     <>
       <div>
@@ -148,42 +151,33 @@ export const Home = ({ user, login, onlineUser, token }: IProps) => {
               onlineUser={onlineUser}
               socket={socket}
             />
-            <GenericList
-              items={posts}
-              childComp={
-                <PostCard
-                  item={{} as Posts}
-                  users={users}
-                  login={login}
-                  doLikes={doLikes}
-                  onlineUser={onlineUser}
-                  token={token}
-                  addFriend={addFriend}
-                  createComment={createComment}
-                />
-              }
-            />
           </div>
         </div>
+        {JSON.stringify(loggedin)}
         <div className="rightbar">
           {users?.map((t: any) => {
             return (
-              <div
-                onClick={(e) => {
-                  e.preventDefault();
-                  changeProfile(
-                    t,
-                    login.token,
-                    "http://localhost:3000/users/" + t._id
-                  );
-                  getPostOfUser(
-                    login.token,
-                    "http://localhost:3000/" + t._id + "/posts"
-                  );
-                }}
-              >
-                {t.firstName}
-              </div>
+              t._id !== onlineUser._id && (
+                <>
+                  <div className={t.online ? "loggedin" : "loggedout"}></div>
+                  <div
+                    onClick={(e) => {
+                      e.preventDefault();
+                      changeProfile(
+                        t,
+                        login.token,
+                        "http://localhost:3000/users/" + t._id
+                      );
+                      getPostOfUser(
+                        login.token,
+                        "http://localhost:3000/" + t._id + "/posts"
+                      );
+                    }}
+                  >
+                    {t.email}
+                  </div>
+                </>
+              )
             );
           })}
         </div>

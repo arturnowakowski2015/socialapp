@@ -9,6 +9,8 @@ import { useAuth } from "./api/useAuth";
 
 export const App = () => {
   const {
+    startedloggedin,
+    registerstatus,
     login,
     user,
     loginUser,
@@ -19,7 +21,7 @@ export const App = () => {
     register,
     handleSubmit,
     setUserData,
-   } = useAuth();
+  } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,13 +30,14 @@ export const App = () => {
 
   return (
     <div className="app">
-      /{JSON.stringify(user)}/{" "}
+      {JSON.stringify(user)}/{" "}
       {isLoggedIn === 0 ? (
         <Routes>
           <Route
             path="/login"
             element={
               <LoginPage
+                registerstatus={registerstatus}
                 loginn={login}
                 setUserLogin={setUserLogin}
                 loginUser={loginUser}
@@ -59,6 +62,7 @@ export const App = () => {
               path="/home"
               element={
                 <Home
+                  startedloggedin={startedloggedin}
                   user={user}
                   login={login}
                   onlineUser={onlineUser}

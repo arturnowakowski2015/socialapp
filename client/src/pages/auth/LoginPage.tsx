@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
 interface IProps {
+  registerstatus: string;
   loginn: Login;
   setUserLogin: (email: string, password: string) => void;
 
@@ -12,10 +13,16 @@ interface IProps {
   ) => Promise<void>;
 }
 
-export const LoginPage = ({ loginn, setUserLogin, loginUser }: IProps) => {
+export const LoginPage = ({
+  registerstatus,
+  loginn,
+  setUserLogin,
+  loginUser,
+}: IProps) => {
   const navigate = useNavigate();
   return (
     <>
+      {registerstatus !== "" && <div>successfully registered !!</div>}
       <div className="containerLogin">
         {JSON.stringify(loginn)}
         <form action="">
@@ -50,4 +57,3 @@ export const LoginPage = ({ loginn, setUserLogin, loginUser }: IProps) => {
     </>
   );
 };
- 

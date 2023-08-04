@@ -1,5 +1,5 @@
 import axios from "axios";
-
+export const BASE_URL = "http://localhost:3000";
 export const api = {
   get: <T>(url: string, params?: object) =>
     axios.get<T>(url, {

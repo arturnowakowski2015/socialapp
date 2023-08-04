@@ -11,6 +11,14 @@ export const loginUser = async (req, res) => {
     const user = usersarr.filter((t) => {
       return t.email === email && t;
     });
+    user[0].online = true;
+    usersarr.splice(
+      usersarr.findIndex((t) => {
+        return t._id == user[0]._id && t;
+      }),
+      1,
+      user[0]
+    );
     if (user === 0)
       return res.status(400).json({ msg: "User does not exist. " });
 
@@ -23,6 +31,14 @@ export const loginUser = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+  let logged = usersarr.filter((t) => {
+    return t.online === true && t;
+  });
+  let online = [];
+  logged.map((t) => {
+    online.push(t._id);
+  });
+  req.app.get("socketio").emit("message_from_login", { online });
 };
 export const register = async (req, res) => {
   try {
@@ -49,7 +65,7 @@ export const register = async (req, res) => {
       console.log(1111111);
     } else {
       usersarr.push({
-        _id: new Date().getTime(),
+        _id: Math.floor(Math.random() * 100000),
         firstName,
         lastName: "sssssss",
         email: email,
@@ -60,22 +76,26 @@ export const register = async (req, res) => {
         occupation: "private",
         viewedProfile: Math.floor(Math.random() * 10000),
         impressions: Math.floor(Math.random() * 10000),
+        createdAt: 111111,
+        online: false,
+        updatedAt: 111111,
+        __v: 0,
       });
-
       res.status(201).json({
         data: usersarr.filter((t) => {
           return t.email === email && t;
         })[0],
       });
+
       console.log(
-        usersarr.filter((t) => {
-          return t.email === email && t;
-        })[0]
+        usersarr,
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
       );
     }
   } catch (err) {
     res.status(500).json({ error: "dddddd" });
   }
+  req.app.get("socketio").emit("message_from_register");
 };
 
 export default router;

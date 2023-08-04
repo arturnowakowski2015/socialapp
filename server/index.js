@@ -21,7 +21,7 @@ import {
   getFeedPosts,
   getComments,
 } from "./routes/posts.js";
-import { addFriend, getUser, getFriends } from "./routes/users.js";
+import { addFriend, getUser, getFriends, getUsers } from "./routes/users.js";
 import { verifyToken } from "./middleware/auth.js";
 
 import { usersarr, posts, userIds, socketids } from "./data/index.js";
@@ -52,7 +52,7 @@ app.use(
   })
 );
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-/*const serv = app.listen(3002);
+const serv = app.listen(3002);
 const io = new Server(serv, {
   cors: {
     "Access-Control-Allow-Origin": "http://localhost:3002:*",
@@ -64,15 +64,15 @@ io.on("connection", async (socket) => {
   socket.on("message_about_userid", (userid) => {
     socketids.set(userid.uid, socket.id);
     console.log(":::::::::::::::::::::::::k   " + userid.uid);
-    /*
-    req.app.get('socketio').to(socketids.get(usersarr[usersarr.findIndex((t)=>{t.email===email})]._id)).emit('message_from_likes',
-    `user ${email} has logged`)
-   
-    console.log("Made socket connection");
+
+    // req.app.get('socketio').to(socketids.get(usersarr[usersarr.findIndex((t)=>{t.email===email})]._id)).emit('message_from_likes',
+    // `user ${email} has logged`)
+
+    // console.log("Made socket connection");
   });
 });
-*/
-//app.set("socketio", io);
+
+app.set("socketio", io);
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
@@ -86,35 +86,17 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 /* REGISTER USER */
 
-let onlineUsers = [];
-
-const addNewUser = (username, socketId) => {
-  !onlineUsers.some((user) => user.username === username) &&
-    onlineUsers.push({ username, socketId });
-};
-
-const removeUser = (socketId) => {
-  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
-};
-
-const getUserFromIo = (username) => {
-  return onlineUsers.find((user) => user.username === username);
-};
-
 app.put("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
 
 app.post("/login", loginUser);
-app.use("/posts", postRoutes);
 
 app.get("/friends", getFriends);
 /* READ */
 app.get("/p", verifyToken, getFeedPosts);
-app.get("/users", verifyToken, (request, response) => {
-  return response.json(usersarr);
-});
+app.get("/users", verifyToken, getUsers);
 app.get("/users/:userId", verifyToken, getUser);
 app.get("/:userId/posts", verifyToken, postsOfUser);
 app.patch("/:id/:userId/likes", verifyToken, doLikes);
