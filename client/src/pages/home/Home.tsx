@@ -150,6 +150,21 @@ export const Home = ({
               sendPost={sendPost}
               onlineUser={onlineUser}
               socket={socket}
+            />{" "}
+            <GenericList
+              items={posts}
+              childComp={
+                <PostCard
+                  item={{} as Posts}
+                  users={users}
+                  login={login}
+                  doLikes={doLikes}
+                  onlineUser={onlineUser}
+                  token={token}
+                  addFriend={addFriend}
+                  createComment={createComment}
+                />
+              }
             />
           </div>
         </div>
@@ -158,7 +173,7 @@ export const Home = ({
           {users?.map((t: any) => {
             return (
               t._id !== onlineUser._id && (
-                <>
+                <div className="container">
                   <div className={t.online ? "loggedin" : "loggedout"}></div>
                   <div
                     onClick={(e) => {
@@ -176,7 +191,7 @@ export const Home = ({
                   >
                     {t.email}
                   </div>
-                </>
+                </div>
               )
             );
           })}

@@ -2,6 +2,11 @@ export interface IFile {
   url: string;
   name: string;
 }
+export interface IFriend {
+  login: User;
+  userid: number;
+  token: string;
+}
 export interface Notifications {
   users: string[];
   likes: string[];

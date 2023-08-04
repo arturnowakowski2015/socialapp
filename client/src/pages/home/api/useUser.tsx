@@ -1,8 +1,11 @@
 import useFetch from "./useFetch";
 import { useState } from "react";
-import { User, fetchActionSet } from "../../../model/Interface";
+import { User, IFriend } from "../../../model/Interface";
 import { useQuery } from "@tanstack/react-query";
 import { getUsersQuery } from "../../../utils/users";
+import { useMutation } from "@tanstack/react-query";
+import { AddFriend } from "../../../utils/users";
+
 const useAddFriend = (user: User) => {
   const [addedUser, setAddedUser] = useState<User>(user);
 
@@ -40,25 +43,24 @@ const useUser = (token: string) => {
   const getUsers = async () => {
     setLoaderUser(!loaderUser);
   };
+
+  const mutator = useMutation({
+    mutationFn: (friend: IFriend) => {
+      return AddFriend(friend);
+    },
+  });
+
   const addFriend = async (
     login: User,
     token: string,
-    userId: number,
+    userid: number,
     parentFriend?: User
   ) => {
-    return await fetch(
-      `http://localhost:3000/addfriend/${login && login.email}/${userId}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    mutator.mutate({ login, userid, token });
   };
 
   return {
+    mutator,
     loggedin,
     users,
     loaderUser,

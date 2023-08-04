@@ -87,10 +87,7 @@ export const register = async (req, res) => {
         })[0],
       });
 
-      console.log(
-        usersarr,
-        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
-      );
+      console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
     }
   } catch (err) {
     res.status(500).json({ error: "dddddd" });

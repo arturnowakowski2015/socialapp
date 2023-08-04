@@ -7,6 +7,8 @@
 .centerbar,
 .rightbar {
   width: 33%;
+}
+.container {
   display: flex;
   flex-direction: row;
 }
@@ -14,6 +16,7 @@
   height: 20px;
   width: 20px;
   background-color: green;
+  transition: background-color 0.5s;
 }
 .loggedout {
   height: 20px;
