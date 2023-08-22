@@ -1,3 +1,27 @@
+import { z } from 'zod';
+const LikesSchema= z.array(z.object({id:z.record(z.string(), z.boolean())}))
+export type Likes = z.infer<typeof LikesSchema>; 
+
+const CommentsSchema= z.array(  z.string() )
+
+const PostsSchema =  
+    z.object({
+      _id: z.string().uuid(),
+      userId: z.number(),
+      firstName: z.string().optional(),
+      laststName: z.string().optional(),
+      location: z.string().optional(),
+      description: z.string().optional(),
+      picturePath: z.string().optional(),
+      userPicturePath: z.string().optional(),
+      likes:LikesSchema,
+      comments:CommentsSchema
+ 
+})
+export type Posts = z.infer<typeof PostsSchema>;
+ 
+
+
 export interface IFile {
   url: string;
   name: string;
@@ -20,9 +44,7 @@ export interface PostInput {
   userId: string;
   userPicture: string;
 }
-export interface Likes {
-  [id: string]: boolean;
-}
+
 type State = {
   data?: JSONResult;
   isLoading: boolean;
@@ -35,39 +57,27 @@ type Action =
   | { type: "request" }
   | { type: "success"; results: JSONResult }
   | { type: "failure"; error: string };
-export interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  friends: string[];
-  location: String;
-  description: string;
-  picturePath: string;
-  ocupation: string;
-  viewedProfile: number;
-  impresions: number;
-  likes: Likes[];
-  comments: string[];
-  online:boolean;
-}
-export interface Login {
-  user: User;
-  token: string;
-}
-export interface Posts {
-  _id: number;
-  userId: number;
-  firstName: string;
-  lastName: string;
-  location: string;
-  description: string;
-  picturePath: string;
-  userPicturePath: string;
-  likes: Likes[];
-  comments: string[];
-}
+  const UserSchema=  z.object({
+         _id: z.string().uuid(),
+   firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  password: z.string().optional(),
+  location: z.string().optional(),
+  description: z.string().optional(),
+  picturePath: z.string().optional(),
+  occupation: z.string().optional(),
+  viewedProfile:z.number(),
+  impressions:z.number(),
+  friends:z.array(z.string()),
+  email:z.string().email(),
+  online:z.boolean()
+})
+export type User = z.infer<typeof UserSchema>; 
+const LoginSchema=  z.object({
+  token:z.string(),
+user:UserSchema})
+  export type Login = z.infer<typeof LoginSchema>
+
 export type fetchActionKind = "get" | "patch" | "post" | "";
 export interface fetchActionSet {
   type: fetchActionKind;

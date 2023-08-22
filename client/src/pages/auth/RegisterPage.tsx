@@ -55,7 +55,7 @@ export const RegisterPage = ({ setUserData, register, user }: IProps) => {
           <input
             type="text"
             placeholder="occupation"
-            value={user.ocupation}
+            value={user.occupation}
             onChange={(e) => setUserData("occupation", e.target.value)}
           />
           <br></br>
