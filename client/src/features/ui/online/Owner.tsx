@@ -1,6 +1,7 @@
 import { User, Notifications } from "../../../model/Interface";
-import { useReducer } from "react";
-import { reducer, Action } from "./api/useNotificationReducer";
+import GenericList from "../../../shared/generic/GenericList";
+
+import { Usersfriends } from "./usersfriends";
 import "./Owner.css";
 interface IProps {
   login: User;
@@ -56,10 +57,12 @@ export const Owner = ({ refresh, notifications, login }: IProps) => {
       </div>
       <div className="label">{login && login.email}</div>
       <div>
-        {
-          login?.friends?.map((t: any) => {
-            return <div>{t}</div>;
-          })}
+aaaaaa
+      <GenericList
+              items={login?.friends}
+              childComp={
+                <Usersfriends friend={""}/>}
+              />
       </div>
     </div>
   );
