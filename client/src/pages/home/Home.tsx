@@ -8,8 +8,9 @@ import { Owner } from "../../features/ui/online/Owner";
 import CreatePostCard from "../../features/layout/card/CreatePostCard";
 import io from "socket.io-client";
 import useNotifications from "./api/useNotifications";
-import GenericList from "../../features/genericgroup/GenericList";
+import GenericList from "../../shared/generic/GenericList";
 import { reducer, Action } from "./api/useNotificationReducer";
+import {Users} from "./users"
 
 import "./Home.css";
 interface Data {
@@ -172,31 +173,14 @@ export const Home = ({
         </div>
         {JSON.stringify(loggedin)}
         <div className="rightbar">
-          {users?.map((t: any) => {
-            return (
-              t._id !== onlineUser._id && (
-                <div className="container">
-                  <div className={t.online ? "loggedin" : "loggedout"}></div>
-                  <div
-                    onClick={(e) => {
-                      e.preventDefault();
-                      changeProfile(
-                        t,
-                        login.token,
-                        "http://localhost:3000/users/" + t._id
-                      );
-                      getPostOfUser(
-                        login.token,
-                        "http://localhost:3000/" + t._id + "/posts"
-                      );
-                    }}
-                  >
-                    {t.email}
-                  </div>
-                </div>
-              )
-            );
-          })}
+
+ <GenericList
+items={users}
+childComp={
+  <Users item={{} as User} onlineUser={onlineUser} token={login.token} 
+  changeProfile={changeProfile} getPostOfUser={getPostOfUser}/>}
+/>
+ 
         </div>
       </div>
     </>

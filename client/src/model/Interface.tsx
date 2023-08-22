@@ -50,6 +50,7 @@ export interface User {
   impresions: number;
   likes: Likes[];
   comments: string[];
+  online:boolean;
 }
 export interface Login {
   user: User;
