@@ -40,16 +40,16 @@ const useAuth = () => {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify({
-        email: login && login.user && login.user.email,
-        password: login && login.user && login.user.password,
+        email:  login?.user?.email,
+        password:   login?.user?.password,
       }),
     });
 
     const loggedIn = await response.json();
     if (loggedIn) {
       setLogin(loggedIn);
-      setUser(loggedIn && loggedIn.user && loggedIn.user[0]);
-      setOnlineUser(loggedIn && loggedIn.user && loggedIn.user[0]);
+      setUser(  loggedIn?.user?.[0]);
+      setOnlineUser(  loggedIn?.user?.[0]);
       setToken(loggedIn.token);
       setIsLoggedIn(1);
       setStartedloggedin(loggedIn.online);

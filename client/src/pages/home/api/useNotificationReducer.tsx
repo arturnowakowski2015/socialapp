@@ -30,10 +30,10 @@ export function reducer(state: State, action: Action): State {
         state?.users?.indexOf(action.data.text) === -1
       ) {
         if (1 !== action.data.flag1) {
-          state && state.users && state.users.pop();
+            state?.users?.pop();
           state = { ...state, users: state.users };
         } else {
-          state && state.users && state.users.unshift(action.data.text);
+          state?.users?.unshift(action.data.text);
           state = { ...state, users: state.users };
         }
       }

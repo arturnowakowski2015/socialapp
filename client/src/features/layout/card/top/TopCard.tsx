@@ -44,7 +44,7 @@ export const TopCard = ({
             <div
               onClick={(e) => {
                 e.preventDefault();alert("ddd  "+token)
-                addFriend(onlineUser, token, post.userId, users && users[0]);
+                addFriend(onlineUser, token, post.userId, users?.[0]);
               }}
             >
               {" "}
@@ -53,7 +53,7 @@ export const TopCard = ({
           ) : (
             <div
               onClick={() => {
-                addFriend(onlineUser, token, post.userId, users && users[0]);
+                addFriend(onlineUser, token, post.userId,  users?.[0]);
               }}
             >
               <i className="b fa-sharp fa-regular fa-user"></i>

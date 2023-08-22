@@ -107,7 +107,7 @@ export const Home = ({
     });
 
     socketIo.emit("message_about_userid", {
-      uid: onlineUser && onlineUser._id,
+      uid: onlineUser?._id,
     });
 
     return () => {
