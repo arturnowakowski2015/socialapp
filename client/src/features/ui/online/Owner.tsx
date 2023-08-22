@@ -1,7 +1,7 @@
 import { User, Notifications } from "../../../model/Interface";
 import GenericList from "../../../shared/generic/GenericList";
 
-import { Usersfriends } from "./usersfriends";
+import { Usersfriends } from "./components";
 import "./Owner.css";
 interface IProps {
   login: User;
@@ -61,7 +61,7 @@ aaaaaa
       <GenericList
               items={login?.friends}
               childComp={
-                <Usersfriends friend={""}/>}
+                <Usersfriends item={"" as string}/>}
               />
       </div>
     </div>

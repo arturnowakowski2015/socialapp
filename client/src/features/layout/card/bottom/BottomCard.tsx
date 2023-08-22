@@ -1,6 +1,8 @@
 import { User, Posts, Login } from "../../../../model/Interface";
 import { usePostCard } from "./api//usePostCard";
 import useLabelComments from "./api/useLabelComments";
+import { GenericList } from "../../../../shared/generic";
+import { Comments } from "./components";
 interface IProps {
   onlineUser: User;
   post: Posts;
@@ -60,22 +62,17 @@ export const BottomCard = ({
                   doLikes(
                     post._id,
                     login.token,
-                    users &&
-                      users[
-                        users.findIndex((t) => {
-                          return Number(t._id) == post.userId;
-                        })
-                      ] &&
+                     
                       Number(
-                        users[
+                        users?.[
                           users.findIndex((t) => {
                             return Number(t._id) == post.userId;
                           })
                         ]._id
                       )
                   );
-                  users &&
-                    users.findIndex((t) => {
+            
+                    users?.findIndex((t) => {
                       console.log(t._id + ":::" + post.userId);
                       return Number(t._id) == post.userId;
                     });
@@ -90,22 +87,17 @@ export const BottomCard = ({
                   doLikes(
                     post._id,
                     login.token,
-                    users &&
-                      users[
-                        users.findIndex((t) => {
-                          return Number(t._id) == post.userId;
-                        })
-                      ] &&
+                   
                       Number(
-                        users[
+                        users?.[
                           users.findIndex((t) => {
                             return Number(t._id) == post.userId;
                           })
                         ]._id
                       )
                   );
-                  users &&
-                    users.findIndex((t) => {
+            
+                    users?.findIndex((t) => {
                       console.log(t._id + ":::" + post.userId);
                       return Number(t._id) == post.userId;
                     });
@@ -145,9 +137,8 @@ export const BottomCard = ({
           </div>
           <hr></hr>
           <div className="commentsList">
-            {post.comments.map((t) => {
-              return <div className="item">{t}</div>;
-            })}
+            <GenericList items={post.comments} childComp={<Comments item={"" as string} />} />
+ 
           </div>
         </div>
       )}

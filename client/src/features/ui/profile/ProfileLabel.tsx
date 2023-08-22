@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Login, User } from "../../../model/Interface";
+import { GenericList } from "../../../shared/generic";
+import {Friends} from "./components/Friends"
 import useProfileLabel from "./api/useProfileLabel";
 interface IProps {
   user?: User;
@@ -18,24 +20,9 @@ export const ProfileLabel = ({ user, token , changeProfile }: IProps) => {
         ....
         {JSON.stringify(user)}.....
         <div>
-          {friends &&
-            user &&
-            user.friends &&
-            user.friends.map((t: any) => {
-              return (
-                <div
-                  onClick={(e) => {
-                    changeProfile(
-                      user,
-                      token,
-                      "http://localhost:3000/users/" + user._id
-                    );
-                  }}
-                >
-                  {t}
-                </div>
-              );
-            })}
+
+        <GenericList items={user?.friends} childComp={<Friends item={{} as User} token={token} changeProfile={changeProfile} />} />
+  
         </div>
       </div>
     </>
