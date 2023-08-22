@@ -43,8 +43,8 @@ export const addFriend = async (req, res) => {
     req.app
       .get("socketio")
       .to(
-        socketids.get(
-          usersarr[
+        socketids.get(usersarr && 
+          usersarr[usersarr && 
             usersarr.findIndex((t) => {
               return Number(t._id) === Number(uid);
             })

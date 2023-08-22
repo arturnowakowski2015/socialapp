@@ -28,27 +28,22 @@ export const TopCard = ({
         src={"http://localhost:3000/assets/" + post.userPicturePath}
       />
       <div className="email">
-        {users &&
-          users[
+        { 
+          users?.[
             users.findIndex((t) => {
               return Number(t._id) == Number(post.userId);
             })
-          ] &&
-          users[
-            users.findIndex((t) => {
-              return Number(t._id) == Number(post.userId);
-            })
-          ].firstName}
+          ]?.firstName}
       </div>{" "}
       {Number(onlineUser._id) !== post.userId && (
         <legend className="addFriend">
-          {onlineUser &&
-          onlineUser.friends &&
-          onlineUser.friends.filter((t) => {
+          {
+          onlineUser?.friends?.filter((t) => {
             return t.toString() === post.userId.toString() && t;
           }).length === 0 ? (
             <div
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();alert("ddd  "+token)
                 addFriend(onlineUser, token, post.userId, users && users[0]);
               }}
             >

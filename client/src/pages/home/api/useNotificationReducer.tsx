@@ -15,8 +15,8 @@ interface Data {
 
 export type Action =
   | { type: "user"; data: Data }
-  | { type: "likes"; data: Data }
-  | { type: "comments"; data: Data; onlineUser: User }
+  | { type: "likes"; data: Data; onlineUser: User  }
+  | { type: "comments"; data: Data}
   | { type: "posts"; data: Data; onlineUser: User }
   | { type: "resetPost" }
   | { type: "resetUsers" }
@@ -26,10 +26,8 @@ export type Action =
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "user":
-      if (
-        state &&
-        state.users &&
-        state.users.indexOf(action.data.text) === -1
+      if ( 
+        state?.users?.indexOf(action.data.text) === -1
       ) {
         if (1 !== action.data.flag1) {
           state && state.users && state.users.pop();
@@ -41,12 +39,12 @@ export function reducer(state: State, action: Action): State {
       }
 
       return state;
-    case "likes":
+    case "comments":
       if (state.comments.indexOf(action.data.text) === -1)
         state.comments.unshift(action.data.text);
 
       return { ...state, comments: state.comments };
-    case "comments":
+    case "likes":
       if (Number(action.onlineUser._id) === Number(action.data.uid)) {
         if (action.data.flag === 1) state.likes.unshift(action.data.text);
         else state.likes.pop();

@@ -1,27 +1,26 @@
 import { User, IFriend } from "../model/Interface";
-import { api, BASE_URL } from "./api";
-
+import { axios } from "./api";
 const getUsersQuery = async (token: string): Promise<User[]> => {
-  const resp = await api.get<User[]>(BASE_URL + "/users", {
+  const resp = await axios.get<User[]>("/users", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
   return resp.data;
 };
-const AddFriend = async (friend: IFriend) => {
-  const resp = await api.patch<User[]>(
-    BASE_URL +
-      "addfriend/" +
+const AddF = async (friend: IFriend): Promise<User> => {
+  const resp = await axios.patch <User>( 
+      "/addfriend/" +
       (friend.login && friend.login.email) +
       "/" +
-      friend.userid,
-    {
-      headers: {
-        Authorization: `Bearer ${friend.token}`,
+      friend.userid,{},{
+          headers: {
+     Authorization: `Bearer ${friend.token}`,
+        
       },
     }
   );
   return resp.data;
 };
-export { getUsersQuery, AddFriend };
+export { getUsersQuery, AddF };
+ 

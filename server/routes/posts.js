@@ -88,7 +88,7 @@ uid=userId;
     res.status(404).json({ message: err.message });
   } 
   console.log("uid   "+uid)
-  req.app.get('socketio').to(socketids.get(  usersarr[  usersarr.findIndex((t)=>{return Number(t._id)===Number(uid)})]._id))
+  req.app.get('socketio').to(socketids.get( usersarr && usersarr[usersarr &&  usersarr.findIndex((t)=>{return Number(t._id)===Number(uid)})]._id))
     .emit('message_from_likes', {text:`user  `,uid:uid, flag:flag})
 };
 export const postsOfUser = (req, res) => {

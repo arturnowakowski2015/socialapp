@@ -89,11 +89,11 @@ export const Home = ({
     );
 
     socketIo.on("message_from_comments", (data) =>
-      dispatch({ type: "comments", onlineUser: onlineUser, data: data })
+      dispatch({ type: "comments",  data: data })
     );
 
     socketIo.on("message_from_likes", (data) =>
-      dispatch({ type: "likes", data: data })
+      dispatch({ type: "likes",onlineUser: onlineUser, data: data })
     );
 
     socketIo.on("message_from_posts", (data) =>
@@ -139,7 +139,7 @@ export const Home = ({
           <ProfileLabel
             user={profile}
             changeProfile={changeProfile}
-            login={login}
+            token={login.token}
           />
         </div>
         <div className="centerbar">

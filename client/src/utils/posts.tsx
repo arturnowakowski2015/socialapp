@@ -1,8 +1,8 @@
 import { Posts, User } from "../model/Interface";
-import { api, BASE_URL } from "./api";
+import { axios } from "./api";
 
 const getPostsQuery = async (token: string): Promise<Posts[]> => {
-  const resp = await api.get<Posts[]>(BASE_URL + "/p", {
+  const resp = await axios.get<Posts[]>("/p", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

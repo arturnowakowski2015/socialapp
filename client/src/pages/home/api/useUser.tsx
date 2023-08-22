@@ -3,8 +3,8 @@ import { useState } from "react";
 import { User, IFriend } from "../../../model/Interface";
 import { useQuery } from "@tanstack/react-query";
 import { getUsersQuery } from "../../../utils/users";
-import { useMutation } from "@tanstack/react-query";
-import { AddFriend } from "../../../utils/users";
+import { useMutation , useQueryClient} from "@tanstack/react-query";
+import { AddF } from "../../../utils/users";
 
 const useAddFriend = (user: User) => {
   const [addedUser, setAddedUser] = useState<User>(user);
@@ -16,7 +16,7 @@ const useUser = (token: string) => {
   const [loaderUser, setLoaderUser] = useState<boolean>(false);
 
   const { data: users } = useQuery({
-    queryKey: ["groups", loaderUser],
+    queryKey: ["users", loaderUser],
     queryFn: () => getUsersQuery(token),
   });
 
@@ -43,21 +43,24 @@ const useUser = (token: string) => {
   const getUsers = async () => {
     setLoaderUser(!loaderUser);
   };
-
+    const qC = useQueryClient();
   const mutator = useMutation({
-    mutationFn: (friend: IFriend) => {
-      return AddFriend(friend);
+
+    mutationFn: async (friend: IFriend) => {
+      return await AddF(friend);
     },
+    onSuccess:()=>qC.invalidateQueries(["users", true])
   });
 
-  const addFriend = async (
+  const addFriend = (
     login: User,
     token: string,
     userid: number,
     parentFriend?: User
-  ) => {
-    mutator.mutate({ login, userid, token });
-  };
+  ) => { 
+   // alert(JSON.stringify(mutator))
+     mutator.mutate({ login, userid, token });
+    };
 
   return {
     mutator,

@@ -3,10 +3,10 @@ import { Login, User } from "../../../model/Interface";
 import useProfileLabel from "./api/useProfileLabel";
 interface IProps {
   user?: User;
+  token:string,
   changeProfile: (user: User, token: string, url: string) => void;
-  login: Login;
-}
-export const ProfileLabel = ({ user, login, changeProfile }: IProps) => {
+ }
+export const ProfileLabel = ({ user, token , changeProfile }: IProps) => {
   const [friends, setFriends] = useProfileLabel();
   const navigate = useNavigate();
   return (
@@ -27,7 +27,7 @@ export const ProfileLabel = ({ user, login, changeProfile }: IProps) => {
                   onClick={(e) => {
                     changeProfile(
                       user,
-                      login && login.user && login.user.password,
+                      token,
                       "http://localhost:3000/users/" + user._id
                     );
                   }}
