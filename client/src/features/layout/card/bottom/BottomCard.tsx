@@ -60,7 +60,7 @@ export const BottomCard = ({
               <i
                 onClick={() => {
                   doLikes(
-                    post._id,
+                    Number(post._id),
                     login.token,
                      
                       Number(
@@ -85,7 +85,7 @@ export const BottomCard = ({
               <i
                 onClick={() => {
                   doLikes(
-                    post._id,
+                    Number(post._id),
                     login.token,
                    
                       Number(
