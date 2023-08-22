@@ -23,18 +23,18 @@ import {
 } from "./routes/posts.js";
 import { addFriend, getUser, getFriends, getUsers } from "./routes/users.js";
 import { verifyToken } from "./middleware/auth.js";
- 
+
 import { usersarr, posts, userIds, socketids } from "./data/index.js";
 import http from "http";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-    
-/* CONFIGURATIONS */ 
+
+/* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);  
-dotenv.config();  
-const app = express();      
-  
+const __dirname = path.dirname(__filename);
+dotenv.config();
+const app = express();
+
 const server = http.createServer(app);
 import { Server } from "socket.io";
 
@@ -107,10 +107,10 @@ app.patch("/createcomment", verifyToken, createComment);
    
 // 
     
-/* MONGOOSE SETUP */ 
+/* MONGOOSE SETUP */  
 const PORT = process.env.PORT   || 3000;
    
 server.listen(PORT, () => console.log(`Server Port: ${PORT}`));
    
-// next line is the money  
-                  
+// next line is the money   
+                                 

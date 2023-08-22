@@ -10,7 +10,7 @@ import useFetch from "./useFetch";
 const usePost = () => {
   const [posts, setPosts] = useState<Posts[]>([] as Posts[]);
   const [users, setUsers] = useState<User[]>();
-  const [profile, setProfile] = useState<User>();
+
   const [post, setPost] = useState<PostInput>({} as PostInput);
   const { loader, setParams } = useFetch();
 
@@ -87,25 +87,15 @@ const usePost = () => {
   };
 
   const getPostOfUser = async (token: string, url: string) => {};
-  const changeProfile = async (user: User, token: string, url: string) => {
-    const response: any = await fetch(url, {
-      // this cannot be 'no-cors'
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
 
-    const data1 = await response.json();
-    setProfile(data1);
-  };
 
   return {
     users,
     posts,
     loader,
-    profile,
-    setProfile,
+ 
     getPosts,
-    changeProfile,
+ 
     getPostOfUser,
     doLikes,
     setInput,

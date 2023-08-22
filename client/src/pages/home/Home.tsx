@@ -33,18 +33,16 @@ export const Home = ({
   token,
 }: IProps) => {
   const {
-    posts,
-    profile,
-    setProfile,
+    posts, 
     getPosts,
-    changeProfile,
+ 
     getPostOfUser,
     doLikes,
     setInput,
     sendPost,
     createComment,
   } = usePost();
-  const { loggedin, users, loaderUser, getUsers, addFriend, loginmessage } =
+  const { loggedin, users, loaderUser, getUsers, addFriend,    setProfile, profile,changeProfile, loginmessage } =
     useUser(token);
   const [refreshPosts, setRefreshPosts] = useState<boolean>(false);
   const [notifications, setNotifications, socket, setSocket] =
@@ -53,6 +51,7 @@ export const Home = ({
     dispatch({ type: "resetPost" });
     setRefreshPosts(true);
   };
+ 
   useEffect(() => {
     getPosts({
       type: "get",
@@ -84,8 +83,10 @@ export const Home = ({
   useEffect(() => {
     const socketIo = io("localhost:3002");
 
-    socketIo.on("message_from_users", (data) =>
-      dispatch({ type: "user", data: data })
+    socketIo.on("message_from_users", (data) =>{
+      dispatch({ type: "user", data: data }); 
+ 
+    }
     );
 
     socketIo.on("message_from_comments", (data) =>
@@ -120,6 +121,7 @@ export const Home = ({
   useEffect(() => {
     setProfile(user);
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     getUsers();
   }, [onlineUser]);

@@ -49,7 +49,7 @@ const useUser = (token: string) => {
     mutationFn: async (friend: IFriend) => {
       return await AddF(friend);
     },
-    onSuccess:()=>qC.invalidateQueries(["users", true])
+     
   });
 
   const addFriend = (
@@ -60,14 +60,30 @@ const useUser = (token: string) => {
   ) => { 
    // alert(JSON.stringify(mutator))
      mutator.mutate({ login, userid, token });
+     if(profile?.friends.indexOf(userid.toString())!==-1)
+     profile?.friends.splice(profile?.friends.findIndex((t)=>{return t===userid.toString()}),1)
+     else profile?.friends.push(userid.toString())
+     setProfile(profile)
     };
 
+    const [profile, setProfile] = useState<User>();
+    const changeProfile = async (user: User, token: string, url: string) => {
+      const response: any = await fetch(url, {
+        // this cannot be 'no-cors'
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      const data1 = await response.json();
+      setProfile(data1);
+    };
   return {
     mutator,
     loggedin,
     users,
     loaderUser,
     loader,
+    setProfile, profile,changeProfile,
     getUsers,
     addFriend,
     loginmessage,
