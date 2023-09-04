@@ -25,8 +25,7 @@ export const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/login");
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="app">

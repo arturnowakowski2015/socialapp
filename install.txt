@@ -6,6 +6,9 @@ npm install
 npm i react react-dom react   react-router-dom  --save-dev @types/react-dom   socket.io-client
  
 
+ npm install react-hook-form @hookform/resolvers zod
+
+
 io.on("connection", (socket) => {
   console.log("Made socket connection");
 });

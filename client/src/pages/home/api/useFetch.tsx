@@ -22,7 +22,7 @@ const useFetch = () => {
     switch (action.type) {
       case "get":
         setLoader(true);
-        const response1 = await fetch((action?.url as string), {
+        const response1 = await fetch(action?.url as string, {
           // this cannot be 'no-cors'
           method: "GET",
           headers: {
@@ -51,7 +51,7 @@ const useFetch = () => {
         return t2;
       case "post":
         setLoader(true);
-        const response3 = await fetch((action?.url as string), {
+        const response3 = await fetch(action && (action?.url as string), {
           // this cannot be 'no-cors'
           headers: { "Content-Type": "application/json" },
           method: "POST",
