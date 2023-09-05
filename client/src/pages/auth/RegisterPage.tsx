@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { DropImage } from "./components/DropImage";
 import "./registerpage.css";
 
 interface IProps {
@@ -13,7 +12,7 @@ interface IProps {
   register: (data: User) => void;
 }
 
-const MAX_FILE_SIZE = 500000;
+const MAX_FILE_SIZE = 50000000000;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -21,18 +20,18 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/webp",
 ];
 
-const someSchema = z.object({
-  image: z
-    .any()
-    .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported."
-    ),
-});
-
 const formSchema = z
   .object({
+    file: z
+      .any()
+      .refine(
+        (file) => file?.[0]?.size <= MAX_FILE_SIZE,
+        `Max image size is 5MB.`
+      )
+      .refine(
+        (file) => ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type),
+        "Only .jpg, .jpeg, .png and .webp formats are supported."
+      ),
     firstname: z.string().min(1, "Password is required").max(100),
     secondname: z.string().min(1, "Password is required"),
     email: z.string().email("Invalid email").min(1, "Email is required"),
@@ -173,6 +172,9 @@ export const RegisterPage = ({
             type="text"
             placeholder="occupation"
             {...register("occupation")}
+            onChange={(e) =>
+              setUserData("picturePath", e.currentTarget.value.split("\\")[2])
+            }
           />{" "}
           <br />{" "}
           <div className="err">
@@ -180,6 +182,17 @@ export const RegisterPage = ({
               <span className="errmess">{errors.occupation?.message}</span>
             )}
           </div>
+        </div>
+        <input
+          className="file-input"
+          type="file"
+          {...register("file")}
+          name="file"
+        />
+        <div className="err">
+          {errors.file && (
+            <span className="errmess">{errors.file?.message?.toString()}</span>
+          )}
         </div>
         <br></br>
         <button type="submit" disabled={isSubmitting}>
@@ -193,6 +206,11 @@ export const RegisterPage = ({
 /*
     <>
       {" "}
+              <DropImage
+          handleFileInput={(e) => {
+            setUserData("picturePath", e.split("\\")[2]);
+          }}
+        />
       <div className="registerContainer">
             <form 
   onSubmit={handleSubmit(onSubmit)}            >
