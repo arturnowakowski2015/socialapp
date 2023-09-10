@@ -6,6 +6,17 @@ npm install
 npm i react react-dom react   react-router-dom  --save-dev @types/react-dom   socket.io-client
  
 
+trl + /   comments
+alt+shift+down/top   duplicate code
+ctrl-d  duplicate text
+alt-left mouse    select additional field
+alt+down/top    move text
+ctrl-shift-o    open variables, functions list
+:11    in variable list move to line number 11
+
+ctrl+mouse over selected text shows functions body
+
+
  npm install react-hook-form @hookform/resolvers zod
 
 https://brightdata.com/blog/how-tos/web-scraping-with-node-js
