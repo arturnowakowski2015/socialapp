@@ -24,6 +24,7 @@ https://brightdata.com/blog/how-tos/web-scraping-with-node-js
 https://github.com/Mridul2820/git-o-get
 https://www.cssportal.com/
 https://codebeautify.org/jsonviewer
+https://github.com/TanStack/query/blob/main/examples/react/pagination/src/pages/index.js
 
 
 io.on("connection", (socket) => {
