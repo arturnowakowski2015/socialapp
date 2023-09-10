@@ -36,3 +36,110 @@ app.set("socketio", io)
 
   req.app.get('socketio').emit('message_from_likes', `user ${usersarr[usersarr.findIndex((t)=>t._id==uid)].email} like your 
     post ${posts[posts.findIndex((t)=>t._id === Number(postid) )].description}`)
+
+
+
+###############################################################################################################################
+https://blog.logrocket.com/when-not-to-use-usememo-react-hook/
+
+
+import { useEffect, useState, useCallback } from "react";
+ import * as React from "react";
+
+type Props = {
+  children?: React.ReactNode;
+};
+const BGCP: React.FC<Props> = ({ children }) => {
+  const [backgroundColor, setBackgroundColor] = useState<string>("red");
+  return (
+    <div style={{ backgroundColor }}>
+      <input
+        onChange={(e) => setBackgroundColor(e.target.value)}
+        placeholder="text"
+      />
+      {children}
+    </div>
+  );
+};
+ 
+ 
+const Expensive = () => {
+  console.log("expensive compenent rendered!");
+
+  let total = 0;
+  for (let i = 0; i < 1000000000; i++) {
+    total += i;
+  }
+
+  return <div>Expensive</div>;
+};
+
+const BgProvider = ({ children }) => {
+  let [backgroundColor, setBackgroundColor] = useState("white");
+  return (
+    <div style={{ backgroundColor }}>
+      <input onChange={(e) => setBackgroundColor(e.target.value)} />
+      {children}
+    </div>
+  );
+};
+type Todos = {
+  id: number;
+  ct: string;
+};
+const todos = [
+  { id: 0, ct: "0000000" },
+  { id: 1, ct: "11111111" },
+  { id: 2, ct: "222222222" },
+  { id: 3, ct: "333333333" },
+  { id: 4, ct: "44444444" },
+];
+interface Propstodos {
+  getTodos: () => Todos;
+}
+const TodoSection = ({ getTodos }: Propstodos) => {
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    setTodos([...todos, getTodos()]);
+    console.log("getTodos called");
+  }, [getTodos]);
+  return (
+    <>
+      {todos.map((todo) => (
+        <p key={todo?.id}>{todo?.ct}</p>
+      ))}
+    </>
+  );
+};
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [revCount, setRevCount] = useState(100);
+  const getTodos = useCallback(() => {
+    return todos[count];
+  }, [count]);
+  return (
+    <div>
+      <p>{revCount}</p>
+      <button onClick={() => setRevCount(revCount - 1)}>rev</button>
+      <button onClick={() => setCount(count + 1)}>count</button>
+      <TodoSection getTodos={getTodos} />
+    </div>
+  );
+};
+
+export default () => {
+ 
+  return (
+    <>
+      <BgProvider>
+        <Expensive />
+        <App />
+      </BgProvider>
+      <h1>Socket.io</h1>
+      <h1>Socket Message: {message}</h1>
+      <p>User Onle Visible when you open in Sencond Tab</p>
+      <h1>User: {user}</h1>
+      <Hello />
+    </>
+  );
+};
