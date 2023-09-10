@@ -8,6 +8,10 @@ npm i react react-dom react   react-router-dom  --save-dev @types/react-dom   so
 
  npm install react-hook-form @hookform/resolvers zod
 
+https://brightdata.com/blog/how-tos/web-scraping-with-node-js
+
+https://github.com/Mridul2820/git-o-get
+
 
 io.on("connection", (socket) => {
   console.log("Made socket connection");
