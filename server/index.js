@@ -53,22 +53,23 @@ app.use(
 );
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 const serv = app.listen(3002);
-const io = new Server(serv, {origin:'*', 
-  credentials:true,
-  cors: {    
+const io = new Server(serv, {
+  origin: "*",
+  credentials: true,
+  cors: {
     "Access-Control-Allow-Origin": "http://localhost:3002:*",
     "Access-Control-Request-Method": "*",
-  }, 
-});   
- 
+  },
+});
+
 io.on("connection", async (socket) => {
   socket.on("message_about_userid", (userid) => {
-    socketids.set(userid.uid, socket.id); 
-    console.log(":::::::::::::::::::::::::k   "  + userid.uid);
+    socketids.set(userid.uid, socket.id);
+    console.log(":::::::::::::::::::::::::k   " + userid.uid);
 
     // req.app.get('socketio').to(socketids.get(usersarr[usersarr.findIndex((t)=>{t.email===email})]._id)).emit('message_from_likes',
-    // `user ${email} has logg ed`)   
- 
+    // `user ${email} has logg ed`)
+
     // console.log("Made socket connection");
   });
 });
@@ -99,18 +100,17 @@ app.get("/friends", getFriends);
 app.get("/p", verifyToken, getFeedPosts);
 app.get("/users", verifyToken, getUsers);
 app.get("/users/:userId", verifyToken, getUser);
-app.get("/:userId/posts", verifyToken, postsOfUser); 
+app.get("/:userId/posts", verifyToken, postsOfUser);
 app.patch("/:id/:userId/likes", verifyToken, doLikes);
-app.patch("/addfriend/:email/:userId", verifyToken, addFriend);       
+app.patch("/addfriend/:email/:userId", verifyToken, addFriend);
 app.patch("/createpost", verifyToken, createPost);
 app.patch("/createcomment", verifyToken, createComment);
-   
-// 
-    
-/* MONGOOSE SETUP */  
-const PORT = process.env.PORT   || 3000;
-   
+
+//
+
+/* MONGOOSE SETUP */
+const PORT = process.env.PORT || 3001;
+
 server.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-   
-// next line is the money   
-                                                 
+
+// next line is the money

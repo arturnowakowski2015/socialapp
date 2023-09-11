@@ -10,7 +10,7 @@ import io from "socket.io-client";
 import useNotifications from "./api/useNotifications";
 import GenericList from "../../shared/generic/GenericList";
 import { reducer, Action } from "./api/useNotificationReducer";
-import {Users} from "./users"
+import { Users } from "./users";
 
 import "./Home.css";
 interface Data {
@@ -33,18 +33,28 @@ export const Home = ({
   onlineUser,
   token,
 }: IProps) => {
+  const [postssignal, setPostssignal] = useState<boolean>(false);
+
   const {
-    posts, 
-    getPosts,
- 
+    posts,
+
     getPostOfUser,
     doLikes,
     setInput,
     sendPost,
     createComment,
-  } = usePost();
-  const { loggedin, users, loaderUser, getUsers, addFriend,    setProfile, profile,changeProfile, loginmessage } =
-    useUser(token);
+  } = usePost(token, postssignal);
+  const {
+    loggedin,
+    users,
+    loaderUser,
+    getUsers,
+    addFriend,
+    setProfile,
+    profile,
+    changeProfile,
+    loginmessage,
+  } = useUser(token);
   const [refreshPosts, setRefreshPosts] = useState<boolean>(false);
   const [notifications, setNotifications, socket, setSocket] =
     useNotifications();
@@ -52,28 +62,19 @@ export const Home = ({
     dispatch({ type: "resetPost" });
     setRefreshPosts(true);
   };
- 
   useEffect(() => {
-    getPosts({
-      type: "get",
-      data: [],
-      token: login.token,
-      url: "http://localhost:3000/p",
-    });
+    setPostssignal(true);
     getUsers();
 
     setProfile(user);
+    setPostssignal(false);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    getPosts({
-      type: "get",
-      data: [],
-      token: login.token,
-      url: "http://localhost:3000/p",
-    });
+    setPostssignal(true);
     getUsers();
     setRefreshPosts(false);
+    setPostssignal(false);
   }, [refreshPosts]); // eslint-disable-line react-hooks/exhaustive-deps
   const [state, dispatch] = useReducer(reducer, {
     users: [],
@@ -84,18 +85,16 @@ export const Home = ({
   useEffect(() => {
     const socketIo = io("localhost:3002");
 
-    socketIo.on("message_from_users", (data) =>{
-      dispatch({ type: "user", data: data }); 
- 
-    }
-    );
+    socketIo.on("message_from_users", (data) => {
+      dispatch({ type: "user", data: data });
+    });
 
     socketIo.on("message_from_comments", (data) =>
-      dispatch({ type: "comments",  data: data })
+      dispatch({ type: "comments", data: data })
     );
 
     socketIo.on("message_from_likes", (data) =>
-      dispatch({ type: "likes",onlineUser: onlineUser, data: data })
+      dispatch({ type: "likes", onlineUser: onlineUser, data: data })
     );
 
     socketIo.on("message_from_posts", (data) =>
@@ -145,42 +144,48 @@ export const Home = ({
             token={login.token}
           />
         </div>
-        <div className="centerbar">
-          <div>
-            <CreatePostCard
-              token={token}
-              setInput={setInput}
-              sendPost={sendPost}
-              onlineUser={onlineUser}
-              socket={socket}
-            />{" "}
-            <GenericList
-              items={posts}
-              childComp={
-                <PostCard
-                  item={{} as Posts}
-                  users={users}
-                  login={login}
-                  doLikes={doLikes}
-                  onlineUser={onlineUser}
-                  token={token}
-                  addFriend={addFriend}
-                  createComment={createComment}
-                />
-              }
-            />
+        <div className="centerbar" id="wrapper">
+          <div className="scrollbar" id="style-1">
+            <div className="force-overflow">
+              <CreatePostCard
+                token={token}
+                setInput={setInput}
+                sendPost={sendPost}
+                onlineUser={onlineUser}
+                socket={socket}
+              />{" "}
+              <GenericList
+                items={posts}
+                childComp={
+                  <PostCard
+                    item={{} as Posts}
+                    users={users}
+                    login={login}
+                    doLikes={doLikes}
+                    onlineUser={onlineUser}
+                    token={token}
+                    addFriend={addFriend}
+                    createComment={createComment}
+                  />
+                }
+              />
+            </div>
           </div>
         </div>
         {JSON.stringify(loggedin)}
         <div className="rightbar">
-
- <GenericList
-items={users}
-childComp={
-  <Users item={{} as User} onlineUser={onlineUser} token={login.token} 
-  changeProfile={changeProfile} getPostOfUser={getPostOfUser}/>}
-/>
- 
+          <GenericList
+            items={users}
+            childComp={
+              <Users
+                item={{} as User}
+                onlineUser={onlineUser}
+                token={login.token}
+                changeProfile={changeProfile}
+                getPostOfUser={getPostOfUser}
+              />
+            }
+          />
         </div>
       </div>
     </>

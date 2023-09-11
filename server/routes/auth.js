@@ -28,6 +28,7 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
     res.status(200).json({ token, user });
+    console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -52,7 +53,6 @@ export const register = async (req, res) => {
       location,
       occupation,
     } = req.body;
-    console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -87,7 +87,12 @@ export const register = async (req, res) => {
         })[0],
       });
 
-      console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+      console.log(
+        "successfully registeres user=> " +
+          usersarr.filter((t) => {
+            return t.email === email && t;
+          })[0].email
+      );
     }
   } catch (err) {
     res.status(500).json({ error: "dddddd" });

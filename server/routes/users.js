@@ -3,7 +3,7 @@ import { usersarr, socketids } from "../data/index.js";
 
 const router = express.Router();
 export const getUsers = async (req, res) => {
-  console.log( "  111111111111111111111111111111111111111111");
+  console.log("  111111111111111111111111111111111111111111");
   res.status(200).json(usersarr);
 };
 export const addFriend = async (req, res) => {
@@ -14,7 +14,7 @@ export const addFriend = async (req, res) => {
     const { email, userId } = req.params;
     uemail = email;
     uid = userId;
-    console.log(999999999999999)
+    console.log(999999999999999);
     usersarr.map((t) => {
       console.log(t.email + "::" + email);
       if (t.email === email) {
@@ -32,9 +32,12 @@ export const addFriend = async (req, res) => {
         }
       }
     });
-    console.log("//////    "+usersarr.filter((t) => {
-      return t.email === email && t;
-    })[0])
+    console.log(
+      "//////    " +
+        usersarr.filter((t) => {
+          return t.email === email && t;
+        })[0]
+    );
     res.status(200).json(
       usersarr.filter((t) => {
         return t.email === email && t;
@@ -47,12 +50,14 @@ export const addFriend = async (req, res) => {
     req.app
       .get("socketio")
       .to(
-        socketids.get(usersarr && 
-          usersarr[usersarr && 
-            usersarr.findIndex((t) => {
-              return Number(t._id) === Number(uid);
-            })
-          ]._id
+        socketids.get(
+          usersarr &&
+            usersarr[
+              usersarr &&
+                usersarr.findIndex((t) => {
+                  return Number(t._id) === Number(uid);
+                })
+            ]._id
         )
       )
       .emit("message_from_users", {

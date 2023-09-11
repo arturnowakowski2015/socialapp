@@ -1,0 +1,16 @@
+.errmess {
+  color: red;
+}
+.form {
+  margin: auto;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.err {
+  height: 20px;
+}

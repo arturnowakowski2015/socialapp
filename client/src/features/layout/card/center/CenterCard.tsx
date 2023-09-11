@@ -8,7 +8,7 @@ export const CenterCard = ({ post }: IProps) => {
       {" "}
       <img
         className="postPicture"
-        src={"http://localhost:3000/assets/" + post.picturePath}
+        src={"http://localhost:3001/assets/" + post.picturePath}
       ></img>
       <div className="description">{post.description}</div>
     </div>

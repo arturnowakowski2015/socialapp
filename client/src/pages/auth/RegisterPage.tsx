@@ -11,7 +11,7 @@ interface IProps {
   setUserData: (el: string, value: string) => void;
   register: (data: User) => void;
 }
-
+/*
 const MAX_FILE_SIZE = 50000000000;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -49,15 +49,10 @@ const formSchema = z
   });
 
 type FormSchemaType = z.infer<typeof formSchema>;
-
-export const RegisterPage = ({
-  setUserData,
-  register: register1,
-  user,
-}: IProps) => {
+*/
+export const RegisterPage = ({ setUserData, register, user }: IProps) => {
   const navigate = useNavigate();
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const {
+  /*  const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -68,7 +63,50 @@ export const RegisterPage = ({
   const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
     console.log(data);
   };
+  */
   return (
+    <>
+      {" "}
+      <div className="registerContainer">
+        <form>
+          {" "}
+          <h1>register Your Data </h1>
+          <br></br>
+          <br></br>
+          <input
+            type="email"
+            placeholder="email"
+            value={user.email}
+            onChange={(e) => setUserData("email", e.target.value)}
+          />
+          <br></br>
+          <input
+            type="text"
+            placeholder="password"
+            value={user.password}
+            onChange={(e) => setUserData("password", e.target.value)}
+          />
+          <br></br>.{JSON.stringify(user)}.
+          <button
+            type="submit"
+            onClick={() => {
+              register(user);
+              navigate("/login");
+            }}
+          >
+            register
+          </button>
+        </form>{" "}
+        <br></br>
+        <br></br>
+      </div>
+    </>
+  );
+};
+
+/*
+
+
     <div className="container">
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -78,6 +116,7 @@ export const RegisterPage = ({
             type="text"
             placeholder="Your firstname"
             {...register("firstname")}
+            onChange={(e) => setUserData("firstName", e.target.value)}
           />{" "}
           <br />
           <div className="err">
@@ -88,11 +127,12 @@ export const RegisterPage = ({
         </div>{" "}
         <br></br>
         <div>
-          <label htmlFor="email">second email</label> <br />
+          <label htmlFor="email">second name</label> <br />
           <input
             type="text"
             placeholder="Your secondname"
             {...register("secondname")}
+            onChange={(e) => setUserData("email", e.target.value)}
           />{" "}
           <br />{" "}
           <div className="err">
@@ -201,112 +241,6 @@ export const RegisterPage = ({
       </form>
     </div>
   );
-};
 
-/*
-    <>
-      {" "}
-              <DropImage
-          handleFileInput={(e) => {
-            setUserData("picturePath", e.split("\\")[2]);
-          }}
-        />
-      <div className="registerContainer">
-            <form 
-  onSubmit={handleSubmit(onSubmit)}            >
-          {" "}
-          <h1>register Your Data </h1>
-          <br></br>
-          <br></br>
-          <input
-            type="email"
-            placeholder="email"
-            value={user.email} {...register("email")}
-            onChange={(e) => setUserData("email", e.target.value)}
-          /> 
-                {errors.email && (
-                  <span className="text-red-800 block mt-2">
-                    {errors.email?.message}
-                  </span>
-                )}
-          <br></br>
-          <div>
-                <label 
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="••••••••"
-                   {...register("password")}
-                />
-                {errors.password && (
-                  <span >
-                    {errors.password?.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label 
-                >
-                  Confirm password
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="••••••••"
-                   {...register("confirmPassword")}
-                />
-    {errors.confirmPassword && (
-      <span >
-        {errors.confirmPassword?.message}
-      </span>
-    )}
-              </div>
-          <input
-            type="text"
-            placeholder="firstName"
-            value={user.firstName}
-            onChange={(e) => setUserData("firstName", e.target.value)}
-          />
-          <br></br>
-          <input
-            type="text"
-            placeholder="lastName"
-            value={user.lastName}
-            onChange={(e) => setUserData("lastName", e.target.value)}
-          />
-          <br></br>
-          <input
-            type="text"
-            placeholder="location"
-            value={user.location as string}
-            onChange={(e) => setUserData("location", e.target.value)}
-          />
-          <br></br>
-          <input
-            type="text"
-            placeholder="occupation"
-            value={user.occupation}
-            onChange={(e) => setUserData("occupation", e.target.value)}
-          />
-          <br></br>
-          <DropImage
-            handleFileInput={(e) => {
-              setUserData("picturePath", e.split("\\")[2]);
-            }}
-          />
-          .{JSON.stringify(user)}.
-          <button
-    type="submit"
-     disabled={isSubmitting}
-  >
-    register
-  </button>
-        </form>{" "}
-        <br></br>
-        <br></br>
-       </div>
-    </>
+
 */

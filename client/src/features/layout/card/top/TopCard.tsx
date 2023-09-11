@@ -25,25 +25,26 @@ export const TopCard = ({
       <img
         className="avatar"
         style={{ width: "40px", height: "40px" }}
-        src={"http://localhost:3000/assets/" + post.userPicturePath}
+        src={"http://localhost:3001/assets/" + post.userPicturePath}
       />
       <div className="email">
-        { 
+        {
           users?.[
             users.findIndex((t) => {
               return Number(t._id) == Number(post.userId);
             })
-          ]?.firstName}
+          ]?.firstName
+        }
       </div>{" "}
       {Number(onlineUser._id) !== post.userId && (
         <legend className="addFriend">
-          {
-          onlineUser?.friends?.filter((t) => {
+          {onlineUser?.friends?.filter((t) => {
             return t.toString() === post.userId.toString() && t;
           }).length === 0 ? (
             <div
               onClick={(e) => {
-                e.preventDefault();alert("ddd  "+token)
+                e.preventDefault();
+                alert("ddd  " + token);
                 addFriend(onlineUser, token, post.userId, users?.[0]);
               }}
             >
@@ -53,7 +54,7 @@ export const TopCard = ({
           ) : (
             <div
               onClick={() => {
-                addFriend(onlineUser, token, post.userId,  users?.[0]);
+                addFriend(onlineUser, token, post.userId, users?.[0]);
               }}
             >
               <i className="b fa-sharp fa-regular fa-user"></i>
