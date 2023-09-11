@@ -1,0 +1,196 @@
+Set-ExecutionPolicy Unrestricted
+npm install 
+
+ npm i express body-parser cors dotenv multer helmet morgan http bcrypt jsonwebtoken path -g nodemon
+
+npm i react react-dom react   react-router-dom  --save-dev @types/react-dom   socket.io-client
+ 
+
+trl + /   comments
+alt+shift+down/top   duplicate code
+ctrl-d  duplicate text
+alt-left mouse    select additional field
+alt+down/top    move text
+ctrl-shift-o    open variables, functions list
+:11    in variable list move to line number 11
+
+ctrl+mouse over selected text shows functions body
+
+
+ npm install react-hook-form @hookform/resolvers zod
+
+
+https://blog.logrocket.com/when-not-to-use-usememo-react-hook/
+https://brightdata.com/blog/how-tos/web-scraping-with-node-js
+
+https://github.com/Mridul2820/git-o-get
+https://www.cssportal.com/
+https://codebeautify.org/jsonviewer
+https://github.com/TanStack/query/blob/main/examples/react/pagination/src/pages/index.js
+
+
+io.on("connection", (socket) => {
+  console.log("Made socket connection");
+});
+app.set("socketio", io)
+
+  req.app.get('socketio').emit('message_from_likes', `user ${usersarr[usersarr.findIndex((t)=>t._id==uid)].email} like your 
+    post ${posts[posts.findIndex((t)=>t._id === Number(postid) )].description}`)
+
+
+
+###############################################################################################################################
+https://blog.logrocket.com/when-not-to-use-usememo-react-hook/
+https://blog.logrocket.com/react-usememo-vs-usecallback/
+
+import { useEffect, useState, useCallback } from "react";
+ import * as React from "react";
+
+type Props = {
+  children?: React.ReactNode;
+};
+const BGCP: React.FC<Props> = ({ children }) => {
+  const [backgroundColor, setBackgroundColor] = useState<string>("red");
+  return (
+    <div style={{ backgroundColor }}>
+      <input
+        onChange={(e) => setBackgroundColor(e.target.value)}
+        placeholder="text"
+      />
+      {children}
+    </div>
+  );
+};
+ 
+ 
+const Expensive = () => {
+  console.log("expensive compenent rendered!");
+
+  let total = 0;
+  for (let i = 0; i < 1000000000; i++) {
+    total += i;
+  }
+
+  return <div>Expensive</div>;
+};
+
+const BgProvider = ({ children }) => {
+  let [backgroundColor, setBackgroundColor] = useState("white");
+  return (
+    <div style={{ backgroundColor }}>
+      <input onChange={(e) => setBackgroundColor(e.target.value)} />
+      {children}
+    </div>
+  );
+};
+type Todos = {
+  id: number;
+  ct: string;
+};
+const todos = [
+  { id: 0, ct: "0000000" },
+  { id: 1, ct: "11111111" },
+  { id: 2, ct: "222222222" },
+  { id: 3, ct: "333333333" },
+  { id: 4, ct: "44444444" },
+];
+interface Propstodos {
+  getTodos: () => Todos;
+}
+const TodoSection = ({ getTodos }: Propstodos) => {
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    setTodos([...todos, getTodos()]);
+    console.log("getTodos called");
+  }, [getTodos]);
+  return (
+    <>
+      {todos.map((todo) => (
+        <p key={todo?.id}>{todo?.ct}</p>
+      ))}
+    </>
+  );
+};
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [revCount, setRevCount] = useState(100);
+  const getTodos = useCallback(() => {
+    return todos[count];
+  }, [count]);
+  return (
+    <div>
+      <p>{revCount}</p>
+      <button onClick={() => setRevCount(revCount - 1)}>rev</button>
+      <button onClick={() => setCount(count + 1)}>count</button>
+      <TodoSection getTodos={getTodos} />
+    </div>
+  );
+};
+
+export default () => {
+ 
+  return (
+    <>
+      <BgProvider>
+        <Expensive />
+        <App />
+      </BgProvider>
+      <h1>Socket.io</h1>
+      <h1>Socket Message: {message}</h1>
+      <p>User Onle Visible when you open in Sencond Tab</p>
+      <h1>User: {user}</h1>
+      <Hello />
+    </>
+  );
+};
+
+
+
+
+
+
+
+
+export default function App() {
+  const [nums, setNums] = useState([]);
+  const [count, setCount] = useState(1);
+
+  const increaseCounter = () => {
+    setCount(count + 1);
+  };
+
+  const addRandom = () => {
+    let randNum = parseInt(Math.random() * 1000, 10);
+    setNums([...nums, randNum]);
+  };
+
+  const magicNum = useMemo(() => calculateMagicNumber(count), [count]);
+
+  return (
+    <div>
+      <div>
+        Counter: {count} | Magic number: {magicNum} &nbsp;
+        <button onClick={increaseCounter}>+</button>
+      </div>
+      <hr />
+      <div>
+        <ul>
+          {nums.map((num, i) => (
+            <li key={i}>{num}</li>
+          ))}
+        </ul>
+        <button onClick={addRandom}>Add random</button>
+      </div>
+    </div>
+  );
+}
+
+function calculateMagicNumber(n) {
+  console.log("Costly calculation triggered.");
+  let num = 1;
+  for (let i = 0; i < n + 1000000000; i++) {
+    num += 123000;
+  }
+  return parseInt(num - num * 0.22, 10);
+}
+
