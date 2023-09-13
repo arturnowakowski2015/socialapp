@@ -1,10 +1,14 @@
+import { render } from "react-dom";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import Example from "./example";
 import { usePost } from "./api/usePost";
 import { useUser } from "./api/useUser";
 import { useEffect, useState, useReducer } from "react";
 import { User, Login, Notifications, Posts } from "../../model/Interface";
 import { PostCard } from "../../features/layout/card/PostCard";
 import { ProfileLabel } from "../../features/ui/profile/ProfileLabel";
-import { Owner } from "../../features/ui/online/Owner";
+import { Menu } from "../../features/ui/online/Menu";
 import CreatePostCard from "../../features/layout/card/CreatePostCard";
 import io from "socket.io-client";
 import useNotifications from "./api/useNotifications";
@@ -13,12 +17,7 @@ import { reducer, Action } from "./api/useNotificationReducer";
 import { Users } from "./users";
 
 import "./Home.css";
-interface Data {
-  text: string;
-  uid: number;
-  flag: number;
-  flag1: number;
-}
+
 interface IProps {
   startedloggedin: string[];
   user: User;
@@ -125,16 +124,22 @@ export const Home = ({
   useEffect(() => {
     getUsers();
   }, [onlineUser]);
+
+  let notarr: string[] = [];
+
   return (
     <>
       <div>
-        DDDDDDDDDDDDDDDDDDDDDDDd
-        <Owner
+        {JSON.stringify(state)}
+        <DndProvider backend={HTML5Backend}>
+          {" "}
+          <Example notifications={state} />{" "}
+        </DndProvider>
+        {/* <Menu
           notifications={state}
           login={onlineUser as User}
           refresh={refresh}
-        />
-        DDDDDDDDDDDDDDDDDDDDddd
+        /> */}
       </div>
       <div className="container">
         <div className="leftbar">

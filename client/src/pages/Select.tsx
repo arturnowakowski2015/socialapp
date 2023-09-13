@@ -1,4 +1,4 @@
-import React ,{useState}from "react";
+import React, { useState } from "react";
 type Option = {
   value: number | string;
   label: string;
@@ -13,7 +13,6 @@ export function Select({ options }: SelectProps) {
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setValue(event.target.value);
-    alert(value)
   }
 
   return (
@@ -26,4 +25,3 @@ export function Select({ options }: SelectProps) {
     </select>
   );
 }
- 

@@ -34,7 +34,6 @@ const useAuth = () => {
     login: Login
   ): Promise<void> => {
     e.preventDefault();
-    alert(JSON.stringify(login));
     const response = await fetch("http://localhost:3001/login", {
       // this cannot be 'no-cors'
       headers: { "Content-Type": "application/json" },

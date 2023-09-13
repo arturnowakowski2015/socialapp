@@ -44,7 +44,6 @@ export const TopCard = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                alert("ddd  " + token);
                 addFriend(onlineUser, token, post.userId, users?.[0]);
               }}
             >
