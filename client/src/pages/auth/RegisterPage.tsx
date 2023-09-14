@@ -86,7 +86,16 @@ export const RegisterPage = ({ setUserData, register, user }: IProps) => {
             value={user.password}
             onChange={(e) => setUserData("password", e.target.value)}
           />
-          <br></br>.{JSON.stringify(user)}.
+          <br></br>{" "}
+          <input
+            className="file-input"
+            type="file"
+            onChange={(e) => {
+              setUserData("picturePath", e.target.value.split("\\")[2]);
+            }}
+            name="file"
+          />
+          .{JSON.stringify(user)}.
           <button
             type="submit"
             onClick={() => {
