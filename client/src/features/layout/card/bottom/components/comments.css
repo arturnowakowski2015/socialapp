@@ -1,0 +1,9 @@
+.comment {
+  flex: 2;
+  margin: 10px;
+  background-color: rgb(238, 218, 138);
+}
+.commentsContainer {
+  display: flex;
+  flex-direction: row;
+}

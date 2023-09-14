@@ -25,7 +25,7 @@ export const TopCard = ({
       <img
         className="avatar"
         style={{ width: "40px", height: "40px" }}
-        src={"http://localhost:3001/assets/" + post.userPicturePath}
+        src={"http://localhost:3001/assets/" + onlineUser.picturePath}
       />
       <div className="email">
         {

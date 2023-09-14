@@ -62,20 +62,20 @@ export const BottomCard = ({
                   doLikes(
                     Number(post._id),
                     login.token,
-                     
-                      Number(
-                        users?.[
-                          users.findIndex((t) => {
-                            return Number(t._id) == post.userId;
-                          })
-                        ]._id
-                      )
+
+                    Number(
+                      users?.[
+                        users.findIndex((t) => {
+                          return Number(t._id) == post.userId;
+                        })
+                      ]._id
+                    )
                   );
-            
-                    users?.findIndex((t) => {
-                      console.log(t._id + ":::" + post.userId);
-                      return Number(t._id) == post.userId;
-                    });
+
+                  users?.findIndex((t) => {
+                    console.log(t._id + ":::" + post.userId);
+                    return Number(t._id) == post.userId;
+                  });
 
                   setLike(!like);
                 }}
@@ -87,20 +87,20 @@ export const BottomCard = ({
                   doLikes(
                     Number(post._id),
                     login.token,
-                   
-                      Number(
-                        users?.[
-                          users.findIndex((t) => {
-                            return Number(t._id) == post.userId;
-                          })
-                        ]._id
-                      )
+
+                    Number(
+                      users?.[
+                        users.findIndex((t) => {
+                          return Number(t._id) == post.userId;
+                        })
+                      ]._id
+                    )
                   );
-            
-                    users?.findIndex((t) => {
-                      console.log(t._id + ":::" + post.userId);
-                      return Number(t._id) == post.userId;
-                    });
+
+                  users?.findIndex((t) => {
+                    console.log(t._id + ":::" + post.userId);
+                    return Number(t._id) == post.userId;
+                  });
 
                   setLike(!like);
                 }}
@@ -126,7 +126,6 @@ export const BottomCard = ({
                 <button
                   onClick={() => {
                     createComment(onlineUser, post, string, token);
-                    setShowInput(false);
                     showComments(post);
                   }}
                 >
@@ -137,8 +136,16 @@ export const BottomCard = ({
           </div>
           <hr></hr>
           <div className="commentsList">
-            <GenericList items={post.comments} childComp={<Comments item={"" as string} />} />
- 
+            <GenericList
+              items={post.comments}
+              childComp={
+                <Comments
+                  i={0}
+                  picturePath={onlineUser.picturePath}
+                  item={"" as string}
+                />
+              }
+            />
           </div>
         </div>
       )}

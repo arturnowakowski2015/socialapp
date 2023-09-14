@@ -2,3 +2,60 @@
   display: "flex";
   flex-direction: "row";
 }
+.icons,
+.nav {
+  display: flex;
+  flex-direction: row;
+}
+.f {
+  padding-left: 10px;
+}
+.label {
+  position: relative;
+  top: -5px;
+  left: 10px;
+}
+.alert {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  position: relative;
+  text-align: center;
+  top: -25px;
+  left: 10px;
+}
+
+.none {
+  width: 70px;
+  height: 20px;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  left: 2px;
+  top: 0px;
+  transition: all 0.5s ease-in-out;
+  color: white;
+  cursor: pointer;
+}
+
+.customize {
+  width: 70px;
+  height: 20px;
+  background-color: rgb(30, 100, 135);
+  position: relative;
+  left: 2px;
+  top: 0px;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+.update {
+  width: 70px;
+  height: 20px;
+  background-color: rgb(30, 100, 135);
+  position: relative;
+  left: 2px;
+  top: 0px;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}

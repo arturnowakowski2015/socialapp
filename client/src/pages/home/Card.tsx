@@ -7,13 +7,8 @@ import { User, Notifications } from "../../model/Interface";
 import { ItemTypes } from "./ItemTypes";
 
 const style = {
-  display: "flex",
-  FlexDirection: "row",
-  width: "20px",
-  height: "20px",
   border: "1px dashed red",
-  padding: "1px",
-  margin: "1px",
+
   backgroundColor: "white",
   cursor: "move",
 };
@@ -115,13 +110,15 @@ export const Card: FC<CardProps> = ({
   drag(drop(ref));
   return (
     <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      <i className={text}>
-        {notifications.posts.length !== 0 && (
-          <div className="alert" onClick={() => {}}>
-            {notifications?.posts?.length}
-          </div>
-        )}
-      </i>
+      <i
+        className={text}
+        style={{
+          height: "20px",
+          width: "20px",
+          padding: "3.2px",
+          margin: "3.2px",
+        }}
+      ></i>
     </div>
   );
 };

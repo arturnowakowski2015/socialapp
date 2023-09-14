@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { useCallback, useState } from "react";
 import { Card } from "./Card";
 import { Notifications } from "../../model/Interface";
+import "./card.css";
 const style = {
   width: 400,
   display: "flex",
@@ -55,6 +56,7 @@ export const Container = ({ notifications }: IProps) => {
     const make = () => {
       setDraggable(false);
     };
+    const [slide, setSlide] = useState<boolean>(false);
     const renderCard = useCallback(
       (
         card: { id: number; text: string },
@@ -79,15 +81,20 @@ export const Container = ({ notifications }: IProps) => {
               </>
             ) : (
               <i
-                className={card.text}
+                className={card.text + " ielem"}
                 style={{
                   height: "20px",
                   width: "20px",
-                  padding: "1.2px",
-                  margin: "1.2px",
+                  padding: "3.2px",
+                  margin: "3.2px",
+                  border: "1px dashed white",
+                }}
+                onMouseOver={() => {
+                  setSlide(true);
                 }}
               >
-                {notifications?.["users"]?.length !== 0 && (
+                {notifications?.[str as keyof typeof notifications]?.length !==
+                  0 && (
                   <div className="alert" onClick={() => {}}>
                     {notifications?.[str as keyof typeof notifications]?.length}
                   </div>
@@ -103,9 +110,26 @@ export const Container = ({ notifications }: IProps) => {
     return (
       <>
         {!draggable ? (
-          <div onClick={() => onmouseover()}>customize</div>
+          <>
+            {JSON.stringify(slide)}
+            <div
+              onClick={() => onmouseover()}
+              onMouseOut={() => setSlide(false)}
+              className={slide ? "customize" : "none"}
+            >
+              customize
+            </div>
+          </>
         ) : (
-          <div onClick={() => make()}>update</div>
+          <div
+            onClick={() => {
+              make();
+              setSlide(false);
+            }}
+            className="update"
+          >
+            update
+          </div>
         )}
         <div style={style}>
           {cards.map((card, i) =>
