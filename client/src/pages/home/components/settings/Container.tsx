@@ -2,7 +2,7 @@ import update from "immutability-helper";
 import type { FC } from "react";
 import { useCallback, useState } from "react";
 import { Card } from "./Card";
-import { Notifications } from "../../model/Interface";
+import { Notifications } from "../../../../model/Interface";
 import "./card.css";
 const style = {
   width: 400,

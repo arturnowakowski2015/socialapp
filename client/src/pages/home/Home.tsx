@@ -1,7 +1,7 @@
 import { render } from "react-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Example from "./example";
+import MenuSettings from "./components/settings/menusettings";
 import { usePost } from "./api/usePost";
 import { useUser } from "./api/useUser";
 import { useEffect, useState, useReducer } from "react";
@@ -14,7 +14,7 @@ import io from "socket.io-client";
 import useNotifications from "./api/useNotifications";
 import GenericList from "../../shared/generic/GenericList";
 import { reducer, Action } from "./api/useNotificationReducer";
-import { Users } from "./users";
+import { Users } from "./components/users";
 
 import "./Home.css";
 
@@ -123,7 +123,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
         {JSON.stringify(state)}
         <DndProvider backend={HTML5Backend}>
           {" "}
-          <Example notifications={state} />{" "}
+          <MenuSettings notifications={state} />{" "}
         </DndProvider>
         {/* <Menu
           notifications={state}

@@ -1,4 +1,4 @@
-import { User } from "../../../model/Interface";
+import { User } from "../../../../model/Interface";
 interface IProps {
   token: string;
   item: User;
