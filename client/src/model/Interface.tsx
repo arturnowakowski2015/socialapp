@@ -5,6 +5,8 @@ const LikesSchema = z.array(
 export type Likes = z.infer<typeof LikesSchema>;
 
 const CommentsSchema = z.array(z.string());
+const loginDataSchema = z.object({ email: z.string(), password: z.string() });
+export type LoginData = z.infer<typeof loginDataSchema>;
 
 const PostsSchema = z.object({
   _id: z.string().uuid(),

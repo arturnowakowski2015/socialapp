@@ -1,4 +1,5 @@
 import { useRegister } from "./useRegister";
+import { useLogin } from "./useLogin";
 import { useState, useEffect } from "react";
 import { Login, User } from "../../../model/Interface";
 
@@ -11,6 +12,7 @@ const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
   let e: boolean = false;
   const { mutator } = useRegister();
+  const { mutator: loginMutator } = useLogin();
   const handleSubmit = async (selectedFile: File) => {
     setSelectedFile(selectedFile);
   };
@@ -34,6 +36,11 @@ const useAuth = () => {
     login: Login
   ): Promise<void> => {
     e.preventDefault();
+    loginMutator.mutate({
+      email: login?.user?.email,
+      password: login?.user?.password as string,
+    });
+    /*
     const response = await fetch("http://localhost:3001/login", {
       // this cannot be 'no-cors'
       headers: { "Content-Type": "application/json" },
@@ -43,8 +50,11 @@ const useAuth = () => {
         password: login?.user?.password,
       }),
     });
+    */
+  };
+  useEffect(() => {
+    const loggedIn = loginMutator.data?.data;
 
-    const loggedIn = await response.json();
     if (loggedIn) {
       setLogin(loggedIn);
       setUser(loggedIn?.user?.[0]);
@@ -53,7 +63,7 @@ const useAuth = () => {
       setIsLoggedIn(1);
       setStartedloggedin(loggedIn.online);
     }
-  };
+  }, [loginMutator.data]);
 
   const setUserLogin = (el: string, value: string) => {
     if (el) setLogin({ ...login, user: { ...login.user, [el]: value } });

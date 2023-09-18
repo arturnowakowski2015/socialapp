@@ -95,7 +95,7 @@ app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 app.post("/login", loginUser);
 
-app.get("/friends", getFriends);
+app.get("/friends", verifyToken, getFriends);
 /* READ */
 app.get("/p", verifyToken, getFeedPosts);
 app.get("/users", verifyToken, getUsers);
