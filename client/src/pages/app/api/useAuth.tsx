@@ -1,5 +1,5 @@
-import { useRegister } from "./useRegister";
-import { useLogin } from "./useLogin";
+import { useRegister } from "../../auth/api/useRegister";
+import { useLogin } from "../../auth/api/useLogin";
 import { useState, useEffect } from "react";
 import { Login, User } from "../../../model/Interface";
 
@@ -40,17 +40,6 @@ const useAuth = () => {
       email: login?.user?.email,
       password: login?.user?.password as string,
     });
-    /*
-    const response = await fetch("http://localhost:3001/login", {
-      // this cannot be 'no-cors'
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({
-        email: login?.user?.email,
-        password: login?.user?.password,
-      }),
-    });
-    */
   };
   useEffect(() => {
     const loggedIn = loginMutator.data?.data;

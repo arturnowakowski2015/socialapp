@@ -61,13 +61,7 @@ export const App = () => {
             <Route
               path="/home"
               element={
-                <Home
-                  startedloggedin={startedloggedin}
-                  user={user}
-                  login={login}
-                  onlineUser={onlineUser}
-                  token={token}
-                />
+                <Home user={user} onlineUser={onlineUser} token={token} />
               }
             />
             <Route path="/profile/:userId" element={<div>auth</div>} />

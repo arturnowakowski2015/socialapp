@@ -19,19 +19,11 @@ import { Users } from "./users";
 import "./Home.css";
 
 interface IProps {
-  startedloggedin: string[];
   user: User;
-  login: Login;
   onlineUser: User;
   token: string;
 }
-export const Home = ({
-  startedloggedin,
-  user,
-  login,
-  onlineUser,
-  token,
-}: IProps) => {
+export const Home = ({ user, onlineUser, token }: IProps) => {
   const [postssignal, setPostssignal] = useState<boolean>(false);
 
   const {
@@ -116,7 +108,7 @@ export const Home = ({
       socketIo.removeListener("message_from_comments");
       socketIo.removeListener("message_from_users");
     };
-  }, [login, doLikes, sendPost, addFriend]);
+  }, [token, doLikes, sendPost, addFriend]);
   useEffect(() => {
     setProfile(user);
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -124,8 +116,6 @@ export const Home = ({
   useEffect(() => {
     getUsers();
   }, [onlineUser]);
-
-  let notarr: string[] = [];
 
   return (
     <>
@@ -146,7 +136,7 @@ export const Home = ({
           <ProfileLabel
             user={profile}
             changeProfile={changeProfile}
-            token={login.token}
+            token={token}
           />
         </div>
         <div className="centerbar" id="wrapper">
@@ -165,7 +155,6 @@ export const Home = ({
                   <PostCard
                     item={{} as Posts}
                     users={users}
-                    login={login}
                     doLikes={doLikes}
                     onlineUser={onlineUser}
                     token={token}
@@ -185,7 +174,7 @@ export const Home = ({
               <Users
                 item={{} as User}
                 onlineUser={onlineUser}
-                token={login.token}
+                token={token}
                 changeProfile={changeProfile}
                 getPostOfUser={getPostOfUser}
               />

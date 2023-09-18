@@ -8,7 +8,6 @@ interface IProps {
   post: Posts;
   users?: User[];
   token: string;
-  login: Login;
   doLikes: (postid: number, token: string, userid?: number) => void;
   createComment: (
     onlineUser: User,
@@ -22,7 +21,6 @@ export const BottomCard = ({
   post,
   users,
   token,
-  login,
   doLikes,
   createComment,
 }: IProps) => {
@@ -61,7 +59,7 @@ export const BottomCard = ({
                 onClick={() => {
                   doLikes(
                     Number(post._id),
-                    login.token,
+                    token,
 
                     Number(
                       users?.[
@@ -86,7 +84,7 @@ export const BottomCard = ({
                 onClick={() => {
                   doLikes(
                     Number(post._id),
-                    login.token,
+                    token,
 
                     Number(
                       users?.[

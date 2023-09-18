@@ -7,7 +7,6 @@ interface IProps {
   item: Posts;
 
   users?: User[];
-  login: Login;
   onlineUser: User;
   token: string;
   doLikes: (postid: number, token: string, userid?: number) => void;
@@ -29,7 +28,6 @@ export const PostCard = ({
   item,
 
   users,
-  login,
   onlineUser,
   token,
   doLikes,
@@ -55,7 +53,6 @@ export const PostCard = ({
         post={item}
         users={users}
         token={token}
-        login={login}
         doLikes={doLikes}
         createComment={createComment}
       />
