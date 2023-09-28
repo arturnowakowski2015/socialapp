@@ -1,12 +1,12 @@
 import { useNavigate, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+
 import { RegisterPage } from "../auth/RegisterPage";
 import { Home } from "../home/Home";
 import { LoginPage } from "../auth/LoginPage";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 import { useAuth } from "./api/useAuth";
-
+import "./App.css";
 export const App = () => {
   const {
     registerstatus,
@@ -28,7 +28,6 @@ export const App = () => {
 
   return (
     <div className="app">
-      {JSON.stringify(user)}/{" "}
       {isLoggedIn === 0 ? (
         <Routes>
           <Route

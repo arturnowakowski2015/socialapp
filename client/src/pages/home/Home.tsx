@@ -1,4 +1,4 @@
-import { render } from "react-dom";
+import { WhoisOnline } from "./components/whoisonline";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Container } from "./components/settings/Container";
@@ -119,6 +119,11 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
 
   return (
     <>
+      <WhoisOnline
+        onlineUser={onlineUser}
+        changeProfile={changeProfile}
+        token={token}
+      />
       <div>
         {JSON.stringify(state)}
         <DndProvider backend={HTML5Backend}>

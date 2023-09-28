@@ -58,7 +58,7 @@ const useAuth = () => {
   }, [loginMutator.data]);
 
   useEffect(() => {
-    alert(JSON.stringify(loginMutator.error));
+    alert("fff  " + JSON.stringify(loginMutator.error));
   }, [loginMutator.error]);
 
   const setUserLogin = (el: string, value: string) => {

@@ -50,7 +50,6 @@ export const Menu = ({ refresh, notifications, login }: IProps) => {
           )}
         </i>
       </div>
-      <div className="label">{login && login.email}</div>
       <div>
         aaaaaa
         <GenericList

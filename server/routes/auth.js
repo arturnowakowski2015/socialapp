@@ -11,7 +11,12 @@ export const loginUser = async (req, res) => {
     const user = usersarr.filter((t) => {
       return t.email === email && t;
     });
-
+    if (
+      usersarr.filter((t) => {
+        return t.online === true && t.email === email && t;
+      }).length === 1
+    )
+      return res.status(400).json({ msg: "User logged in. " });
     if (user.length > 0) {
       user[0].online = true;
       usersarr.splice(
@@ -22,11 +27,13 @@ export const loginUser = async (req, res) => {
         user[0]
       );
     }
-    // if (user.length === 0) {
 
-    //   return res.status(400).json({ msg: "User does not exist. " });
-    // }
+    if (user.length === 0) {
+      return res.status(400).json({ msg: "User does not exist. " });
+    }
+
     const isMatch = await bcrypt.compare(password, user[0].password);
+
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
@@ -34,7 +41,7 @@ export const loginUser = async (req, res) => {
     res.status(200).json({ token, user });
     console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
   } catch (err) {
-    res.status(500).json({ errorf: err.message });
+    res.status(500).json({ error: "kkkkkkkkkkkkk" });
   }
   let logged = usersarr.filter((t) => {
     return t.online === true && t;
