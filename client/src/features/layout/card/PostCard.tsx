@@ -1,4 +1,4 @@
-import { Posts, User, Login } from "../../../model/Interface";
+import { Posts, User, DataCreateComment } from "../../../model/Interface";
 import { BottomCard } from "./bottom/BottomCard";
 import { CenterCard } from "./center/CenterCard";
 import { TopCard } from "./top/TopCard";
@@ -17,12 +17,7 @@ interface IProps {
     userId: number,
     parentFriend?: User
   ) => void;
-  createComment: (
-    onlineUser: User,
-    post: Posts,
-    token: string,
-    str: string
-  ) => void;
+  createComment: (item: DataCreateComment) => void;
 }
 export const PostCard = ({
   item,

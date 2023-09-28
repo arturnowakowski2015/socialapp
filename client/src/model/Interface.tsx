@@ -4,7 +4,18 @@ const LikesSchema = z.array(
 );
 export type Likes = z.infer<typeof LikesSchema>;
 
+export interface DataCreateComment {
+  token: string;
+  userid: number;
+  postid: number;
+  comment: string;
+}
+
 const CommentsSchema = z.array(z.string());
+
+const CommentSchema = z.object({ comment: z.string() });
+export type Comment = z.infer<typeof CommentSchema>;
+
 const loginDataSchema = z.object({ email: z.string(), password: z.string() });
 export type LoginData = z.infer<typeof loginDataSchema>;
 

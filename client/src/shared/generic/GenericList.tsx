@@ -10,10 +10,9 @@ export function GenericList<T>(props: any) {
 
   return (
     <>
-      {items &&
-        items.map((item: any) => {
-          return <> {React.cloneElement(childComp, { item })}</>;
-        })}
+      {items?.map((item: any) => {
+        return <> {React.cloneElement(childComp, { item })}</>;
+      })}
     </>
   );
 }

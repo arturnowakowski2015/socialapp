@@ -14,7 +14,7 @@ import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import { loginUser, register } from "./routes/auth.js";
 import {
-  createComment,
+  addComment,
   createPost,
   doLikes,
   postsOfUser,
@@ -24,10 +24,8 @@ import {
 import { addFriend, getUser, getFriends, getUsers } from "./routes/users.js";
 import { verifyToken } from "./middleware/auth.js";
 
-import { usersarr, posts, userIds, socketids } from "./data/index.js";
+import { socketids } from "./data/index.js";
 import http from "http";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -101,10 +99,11 @@ app.get("/p", verifyToken, getFeedPosts);
 app.get("/users", verifyToken, getUsers);
 app.get("/users/:userId", verifyToken, getUser);
 app.get("/:userId/posts", verifyToken, postsOfUser);
+app.patch("/createcomment", verifyToken, addComment);
+
 app.patch("/:id/:userId/likes", verifyToken, doLikes);
 app.patch("/addfriend/:email/:userId", verifyToken, addFriend);
 app.patch("/createpost", verifyToken, createPost);
-app.patch("/createcomment", verifyToken, createComment);
 
 //
 

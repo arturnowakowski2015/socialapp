@@ -1,4 +1,3 @@
-import useFetch from "./useFetch";
 import { useState } from "react";
 import { User, IFriend } from "../../../model/Interface";
 import { useQuery } from "@tanstack/react-query";
@@ -20,21 +19,6 @@ const useUser = (token: string) => {
     queryFn: () => getUsersQuery(token),
   });
 
-  const { loader, setParams } = useFetch();
-  /*
-  event.preventDefault(); if (selectedFile) {
-    const formData = new FormData();
-    formData.append('image', selectedFile);
-    try {
-        const response = await fetch('https://<server_ip>/api/v1/upload', { method: 'POST', body: formData, });
-        if (response.ok) {
-            console.log('Upload successful');
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-*/
   const [loggedin, setLoggedin] = useState<string[]>([] as string[]);
   const loginmessage = (online: string[]) => {
     setLoggedin(online);
@@ -84,7 +68,6 @@ const useUser = (token: string) => {
     loggedin,
     users,
     loaderUser,
-    loader,
     setProfile,
     profile,
     changeProfile,

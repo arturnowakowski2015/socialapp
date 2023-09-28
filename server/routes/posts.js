@@ -7,6 +7,7 @@ export const createPost = async (req, res) => {
   let uid = 0;
   try {
     const { input, commentPicture, picturePath, userid } = req.body;
+    console.log(JSON.stringify(req.body));
     uid = userid;
     posts.unshift({
       _id: Math.floor(Math.random() * 100000),
@@ -24,30 +25,28 @@ export const createPost = async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
-  req.app
-    .get("socketio")
-    .emit("message_from_posts", {
-      text: `user fff has created post `,
-      uid: uid,
-    });
+  req.app.get("socketio").emit("message_from_posts", {
+    text: `user fff has created post `,
+    uid: uid,
+  });
 };
 
-export const createComment = async (req, res) => {
+export const addComment = async (req, res) => {
+  console.log(4444);
   let post_id = 0;
   let comments = "";
   let u_id = 0;
+
   try {
-    const { userid, postid, comment } = req.body;
-    console.log(userid + "::" + postid + ":::" + comment);
+    const { postid, userid, comment } = req.body.body;
+
     post_id = postid;
     comments = comment;
-    posts &&
-      posts[
-        posts &&
-          posts.findIndex((t) => {
-            return Number(t._id) === Number(post_id);
-          })
-      ].comments.unshift(comments);
+    posts?.[
+      posts?.findIndex((t) => {
+        return Number(t._id) === Number(post_id);
+      })
+    ].comments.unshift(comments);
     res.status(200).json(posts);
     u_id = userid;
   } catch (err) {

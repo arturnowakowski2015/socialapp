@@ -9,7 +9,7 @@ import "./LoginPage.css";
 
 interface IProps {
   registerstatus: string;
-  loginn: Login;
+  login: Login;
   setUserLogin: (email: string, password: string) => void;
 
   loginUser: (
@@ -20,15 +20,10 @@ interface IProps {
 
 export const LoginPage = ({
   registerstatus,
-  loginn,
+  login,
   setUserLogin,
   loginUser,
 }: IProps) => {
-  const navigate = useNavigate();
-  const [login, setLogin] = useState<Login>({} as Login);
-  const [user, setUser] = useState<User>({} as User);
-  const [onlineUser, setOnlineUser] = useState<User>({} as User);
-
   const Register = async (url: string, data: User) => {
     const resp = await axios.put("/auth/register", {
       email: "q@q.pl",
@@ -36,59 +31,32 @@ export const LoginPage = ({
     });
     return resp;
   };
-
-  // const loginUserq = async (
-  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  // ): Promise<void> => {
-  //   e.preventDefault();
-  //   const resp = await axios.put("http://localhost:3001/auth/register", {
-  //     email: "q@q.pl",
-  //     password: "q",
-  //   });
-  //   const response = await fetch("http://localhost:3001/login", {
-  //     // this cannot be 'no-cors'
-  //     headers: { "Content-Type": "application/json" },
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       email: "q@q.pl",
-  //       password: "q",
-  //     }),
-  //   });
-
-  //   const loggedIn = await response.json();
-  //   if (loggedIn) {
-  //     setLogin(loggedIn);
-  //     setUser(loggedIn?.user?.[0]);
-  //     setOnlineUser(loggedIn?.user?.[0]);
-  //   }
-  //   navigate("/home");
-  // };
-
+  const navigate = useNavigate();
   return (
     <>
       {registerstatus !== "" && <div>successfully registered !!</div>}
       <div className="containerLogin">
-        {JSON.stringify(loginn)}
+        {JSON.stringify(login)}
         <form action="">
           <input
             type="password"
             placeholder="password"
-            value={loginn && loginn.user && loginn.user.password}
+            value={login && login.user && login.user.password}
             onChange={(e) => setUserLogin("password", e.currentTarget.value)}
           />
           <br></br>
           <input
             type="email"
             placeholder="email"
-            value={loginn && loginn.user && loginn.user.email}
+            value={login && login.user && login.user.email}
             onChange={(e) => setUserLogin("email", e.currentTarget.value)}
           />
           <br></br>
           <button
             type="submit"
             onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-              loginUser(e, loginn);
-              navigate("/home");
+              loginUser(e, login);
+              // navigate("/home");
             }}
           >
             login

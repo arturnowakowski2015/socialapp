@@ -1,7 +1,7 @@
 import { render } from "react-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import MenuSettings from "./components/settings/menusettings";
+import { Container } from "./components/settings/Container";
 import { usePost } from "./api/usePost";
 import { useUser } from "./api/useUser";
 import { useEffect, useState, useReducer } from "react";
@@ -123,7 +123,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
         {JSON.stringify(state)}
         <DndProvider backend={HTML5Backend}>
           {" "}
-          <MenuSettings notifications={state} />{" "}
+          <Container notifications={state} />{" "}
         </DndProvider>
         {/* <Menu
           notifications={state}

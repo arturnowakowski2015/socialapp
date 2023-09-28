@@ -11,17 +11,21 @@ export const loginUser = async (req, res) => {
     const user = usersarr.filter((t) => {
       return t.email === email && t;
     });
-    user[0].online = true;
-    usersarr.splice(
-      usersarr.findIndex((t) => {
-        return t._id == user[0]._id && t;
-      }),
-      1,
-      user[0]
-    );
-    if (user === 0)
-      return res.status(400).json({ msg: "User does not exist. " });
 
+    if (user.length > 0) {
+      user[0].online = true;
+      usersarr.splice(
+        usersarr.findIndex((t) => {
+          return t._id == user[0]._id && t;
+        }),
+        1,
+        user[0]
+      );
+    }
+    // if (user.length === 0) {
+
+    //   return res.status(400).json({ msg: "User does not exist. " });
+    // }
     const isMatch = await bcrypt.compare(password, user[0].password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
 
@@ -30,7 +34,7 @@ export const loginUser = async (req, res) => {
     res.status(200).json({ token, user });
     console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ errorf: err.message });
   }
   let logged = usersarr.filter((t) => {
     return t.online === true && t;

@@ -3,6 +3,8 @@ import { useLogin } from "../../auth/api/useLogin";
 import { useState, useEffect } from "react";
 import { Login, User } from "../../../model/Interface";
 
+import { useNavigate } from "react-router-dom";
+
 const useAuth = () => {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [token, setToken] = useState<string>("");
@@ -10,7 +12,7 @@ const useAuth = () => {
   const [user, setUser] = useState<User>({} as User);
   const [onlineUser, setOnlineUser] = useState<User>({} as User);
   const [isLoggedIn, setIsLoggedIn] = useState(0);
-  let e: boolean = false;
+  const navigate = useNavigate();
   const { mutator } = useRegister();
   const { mutator: loginMutator } = useLogin();
   const handleSubmit = async (selectedFile: File) => {
@@ -51,8 +53,13 @@ const useAuth = () => {
       setToken(loggedIn.token);
       setIsLoggedIn(1);
       setStartedloggedin(loggedIn.online);
+      navigate("/home");
     }
   }, [loginMutator.data]);
+
+  useEffect(() => {
+    alert(JSON.stringify(loginMutator.error));
+  }, [loginMutator.error]);
 
   const setUserLogin = (el: string, value: string) => {
     if (el) setLogin({ ...login, user: { ...login.user, [el]: value } });

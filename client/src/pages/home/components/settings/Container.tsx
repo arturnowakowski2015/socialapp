@@ -69,7 +69,7 @@ export const Container = ({ notifications }: IProps) => {
           <>
             {" "}
             {draggable === true ? (
-              <>
+              <div>
                 <Card
                   key={card.id}
                   index={index}
@@ -78,7 +78,7 @@ export const Container = ({ notifications }: IProps) => {
                   moveCard={moveCard}
                   notifications={notifications}
                 />
-              </>
+              </div>
             ) : (
               <i
                 className={card.text + " ielem"}
@@ -87,7 +87,7 @@ export const Container = ({ notifications }: IProps) => {
                   width: "20px",
                   padding: "3.2px",
                   margin: "3.2px",
-                  border: "1px dashed white",
+                  border: "1px dashed green",
                 }}
                 onMouseOver={() => {
                   setSlide(true);
@@ -111,7 +111,6 @@ export const Container = ({ notifications }: IProps) => {
       <>
         {!draggable ? (
           <>
-            {JSON.stringify(slide)}
             <div
               onClick={() => onmouseover()}
               onMouseOut={() => setSlide(false)}
@@ -131,10 +130,43 @@ export const Container = ({ notifications }: IProps) => {
             update
           </div>
         )}
-        <div style={style}>
-          {cards.map((card, i) =>
-            renderCard(card, i, draggable, notifications)
-          )}
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {" "}
+          <div
+            style={{ height: "30px", backgroundColor: "white", width: "20px" }}
+            onMouseOver={() => {
+              setSlide(false);
+            }}
+          >
+            {" "}
+          </div>
+          <div style={style}>
+            {cards.map((card, i) =>
+              renderCard(card, i, draggable, notifications)
+            )}
+          </div>
+          <div
+            style={{
+              height: "30px",
+              backgroundColor: "white",
+              width: "20px",
+              position: "relative",
+              left: "-260px",
+            }}
+            onMouseOver={() => {
+              setSlide(false);
+            }}
+          >
+            {" "}
+          </div>
+        </div>
+        <div
+          style={{ height: "10px", backgroundColor: "white", width: "160px" }}
+          onMouseOver={() => {
+            setSlide(false);
+          }}
+        >
+          {" "}
         </div>
       </>
     );

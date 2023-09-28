@@ -9,7 +9,6 @@ import { useAuth } from "./api/useAuth";
 
 export const App = () => {
   const {
-    startedloggedin,
     registerstatus,
     login,
     user,
@@ -19,7 +18,6 @@ export const App = () => {
     token,
     setUserLogin,
     register,
-    handleSubmit,
     setUserData,
   } = useAuth();
   const navigate = useNavigate();
@@ -38,7 +36,7 @@ export const App = () => {
             element={
               <LoginPage
                 registerstatus={registerstatus}
-                loginn={login}
+                login={login}
                 setUserLogin={setUserLogin}
                 loginUser={loginUser}
               />

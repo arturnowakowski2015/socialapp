@@ -1,4 +1,4 @@
-import { User, Posts, Login } from "../../../../model/Interface";
+import { User, Posts, DataCreateComment } from "../../../../model/Interface";
 import { usePostCard } from "./api//usePostCard";
 import useLabelComments from "./api/useLabelComments";
 import { GenericList } from "../../../../shared/generic";
@@ -9,12 +9,7 @@ interface IProps {
   users?: User[];
   token: string;
   doLikes: (postid: number, token: string, userid?: number) => void;
-  createComment: (
-    onlineUser: User,
-    post: Posts,
-    token: string,
-    str: string
-  ) => void;
+  createComment: (item: DataCreateComment) => void;
 }
 export const BottomCard = ({
   onlineUser,
@@ -123,7 +118,12 @@ export const BottomCard = ({
                 />{" "}
                 <button
                   onClick={() => {
-                    createComment(onlineUser, post, string, token);
+                    createComment({
+                      userid: post.userId,
+                      postid: Number(post._id),
+                      comment: string,
+                      token: token,
+                    });
                     showComments(post);
                   }}
                 >
