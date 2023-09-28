@@ -2,6 +2,7 @@ import { User, Posts } from "../../../../model/Interface";
 import { useEffect } from "react";
 
 interface IProps {
+  user: string;
   users?: User[];
   onlineUser: User;
   post: Posts;
@@ -14,6 +15,7 @@ interface IProps {
   ) => void;
 }
 export const TopCard = ({
+  user,
   users,
   onlineUser,
   post,
@@ -44,7 +46,10 @@ export const TopCard = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                addFriend(onlineUser, token, post.userId, users?.[0]);
+                alert(user + ":::" + onlineUser.email);
+                if (user === onlineUser.email)
+                  addFriend(onlineUser, token, post.userId, users?.[0]);
+                else alert("U can add only to onlineUser in Profile");
               }}
             >
               {" "}
@@ -53,7 +58,10 @@ export const TopCard = ({
           ) : (
             <div
               onClick={() => {
-                addFriend(onlineUser, token, post.userId, users?.[0]);
+                alert(typeof user + "::" + typeof onlineUser.email);
+                if (user === onlineUser.email)
+                  addFriend(onlineUser, token, post.userId, users?.[0]);
+                else alert("U can add only to onlineUser in Profile");
               }}
             >
               <i className="b fa-sharp fa-regular fa-user"></i>

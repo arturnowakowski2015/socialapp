@@ -6,9 +6,8 @@ const Register = async (url: string, data: User) => {
   return resp;
 };
 
-const Login = async (url: string, data: LoginData) => {
-  const resp = await axios.post("/login", data);
-  return resp;
+const Login = (url: string, data: LoginData) => {
+  return axios.post("/login", data);
 };
 export { Register, Login };
 /*

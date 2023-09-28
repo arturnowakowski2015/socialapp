@@ -39,7 +39,6 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
     res.status(200).json({ token, user });
-    console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
   } catch (err) {
     res.status(500).json({ error: "kkkkkkkkkkkkk" });
   }
@@ -73,7 +72,6 @@ export const register = async (req, res) => {
       }).length > 0
     ) {
       res.status(404).json({ message: "already exists user" });
-      console.log(1111111);
     } else {
       usersarr.push({
         _id: Math.floor(Math.random() * 100000),

@@ -13,6 +13,7 @@ const useAddFriend = (user: User) => {
 
 const useUser = (token: string) => {
   const [loaderUser, setLoaderUser] = useState<boolean>(false);
+  const qC = useQueryClient();
 
   const { data: users } = useQuery({
     queryKey: ["users", loaderUser],
@@ -23,10 +24,9 @@ const useUser = (token: string) => {
   const loginmessage = (online: string[]) => {
     setLoggedin(online);
   };
-  const getUsers = async () => {
+  const getUsers = () => {
     setLoaderUser(!loaderUser);
   };
-  const qC = useQueryClient();
   const mutator = useMutation({
     mutationFn: async (friend: IFriend) => {
       return await AddF(friend);
@@ -41,14 +41,17 @@ const useUser = (token: string) => {
   ) => {
     // alert(JSON.stringify(mutator))
     mutator.mutate({ login, userid, token });
-    if (profile?.friends.indexOf(userid.toString()) !== -1)
+    if (profile?.friends.indexOf(userid.toString()) !== -1) {
       profile?.friends.splice(
         profile?.friends.findIndex((t) => {
           return t === userid.toString();
         }),
         1
       );
-    else profile?.friends.push(userid.toString());
+    } else {
+      profile?.friends.push(userid.toString());
+    }
+    qC.invalidateQueries(["friends", true]);
     setProfile(profile);
   };
 

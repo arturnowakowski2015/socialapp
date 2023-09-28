@@ -14,7 +14,7 @@ const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
   const navigate = useNavigate();
   const { mutator } = useRegister();
-  const { mutator: loginMutator } = useLogin();
+  const { mutator: loginMutator, err } = useLogin();
   const handleSubmit = async (selectedFile: File) => {
     setSelectedFile(selectedFile);
   };
@@ -58,8 +58,8 @@ const useAuth = () => {
   }, [loginMutator.data]);
 
   useEffect(() => {
-    alert("fff  " + JSON.stringify(loginMutator.error));
-  }, [loginMutator.error]);
+    console.log(err);
+  }, [err]);
 
   const setUserLogin = (el: string, value: string) => {
     if (el) setLogin({ ...login, user: { ...login.user, [el]: value } });

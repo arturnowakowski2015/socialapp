@@ -3,7 +3,6 @@ import { usersarr, socketids } from "../data/index.js";
 
 const router = express.Router();
 export const getUsers = async (req, res) => {
-  console.log("  111111111111111111111111111111111111111111");
   res.status(200).json(usersarr);
 };
 export const addFriend = async (req, res) => {
@@ -14,9 +13,7 @@ export const addFriend = async (req, res) => {
     const { email, userId } = req.params;
     uemail = email;
     uid = userId;
-    console.log(999999999999999);
     usersarr.map((t) => {
-      console.log(t.email + "::" + email);
       if (t.email === email) {
         if (t.friends.indexOf(Number(userId)) != -1) {
           t.friends.splice(
@@ -87,8 +84,24 @@ export const getUser = (req, res) => {
 };
 export const getFriends = (req, res) => {
   try {
-    const { userId } = req.params;
-    res.status(200).json(usersarr[userId].friends);
+    const { set } = req.params;
+    const setarr = set.split(",");
+    console.log(
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa          " +
+        JSON.stringify(setarr)
+    );
+    const namearr = [];
+    const resp = [];
+    usersarr.forEach((t) => {
+      setarr.map((tt) => {
+        if (tt.indexOf(t._id) !== -1 && resp.indexOf(t.email) === -1)
+          resp.push(t.email);
+      });
+    });
+    console.log(
+      "aaaaaaaaaaa                aaaaaaa          " + JSON.stringify(resp)
+    );
+    res.status(200).json(resp);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

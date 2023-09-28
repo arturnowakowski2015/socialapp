@@ -7,7 +7,7 @@ import { useUser } from "./api/useUser";
 import { useEffect, useState, useReducer } from "react";
 import { User, Login, Notifications, Posts } from "../../model/Interface";
 import { PostCard } from "../../features/layout/card/PostCard";
-import { ProfileLabel } from "../../features/ui/profile/ProfileLabel";
+import { ProfileLabel } from "./components/profile/ProfileLabel";
 import { Menu } from "../../features/ui/online/Menu";
 import CreatePostCard from "../../features/layout/card/CreatePostCard";
 import io from "socket.io-client";
@@ -139,6 +139,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
       <div className="container">
         <div className="leftbar">
           <ProfileLabel
+            onlineUser={onlineUser}
             user={profile}
             changeProfile={changeProfile}
             token={token}
@@ -158,6 +159,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
                 items={posts}
                 childComp={
                   <PostCard
+                    user={profile?.email as string}
                     item={{} as Posts}
                     users={users}
                     doLikes={doLikes}

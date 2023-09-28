@@ -7,7 +7,6 @@ export const createPost = async (req, res) => {
   let uid = 0;
   try {
     const { input, commentPicture, picturePath, userid } = req.body;
-    console.log(JSON.stringify(req.body));
     uid = userid;
     posts.unshift({
       _id: Math.floor(Math.random() * 100000),
@@ -32,7 +31,6 @@ export const createPost = async (req, res) => {
 };
 
 export const addComment = async (req, res) => {
-  console.log(4444);
   let post_id = 0;
   let comments = "";
   let u_id = 0;
@@ -150,7 +148,6 @@ export const getFeedPosts = async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
-  console.log("fffffffffffffffffffffff");
 };
 export const getComments = async (req, res) => {
   try {

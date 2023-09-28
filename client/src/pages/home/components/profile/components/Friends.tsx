@@ -1,4 +1,4 @@
-import { User } from "../../../../model/Interface";
+import { User } from "../../../../../model/Interface";
 interface IProps {
   item: User;
   token: string;
@@ -11,7 +11,7 @@ export const Friends = ({ item, token, changeProfile }: IProps) => {
         changeProfile(item, token, "http://localhost:3001/users/" + item._id);
       }}
     >
-      {item.email}
+      /////{item.email}???
     </div>
   );
 };

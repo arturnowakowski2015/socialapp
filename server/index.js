@@ -49,6 +49,7 @@ app.use(
     ],
   })
 );
+console.clear();
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 const serv = app.listen(3002);
 const io = new Server(serv, {
@@ -63,7 +64,6 @@ const io = new Server(serv, {
 io.on("connection", async (socket) => {
   socket.on("message_about_userid", (userid) => {
     socketids.set(userid.uid, socket.id);
-    console.log(":::::::::::::::::::::::::k   " + userid.uid);
 
     // req.app.get('socketio').to(socketids.get(usersarr[usersarr.findIndex((t)=>{t.email===email})]._id)).emit('message_from_likes',
     // `user ${email} has logg ed`)
@@ -99,6 +99,8 @@ app.get("/p", verifyToken, getFeedPosts);
 app.get("/users", verifyToken, getUsers);
 app.get("/users/:userId", verifyToken, getUser);
 app.get("/:userId/posts", verifyToken, postsOfUser);
+app.get("/:friends/:set", verifyToken, getFriends);
+
 app.patch("/createcomment", verifyToken, addComment);
 
 app.patch("/:id/:userId/likes", verifyToken, doLikes);

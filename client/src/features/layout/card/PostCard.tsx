@@ -5,7 +5,7 @@ import { TopCard } from "./top/TopCard";
 import "./PostCard.css";
 interface IProps {
   item: Posts;
-
+  user: string;
   users?: User[];
   onlineUser: User;
   token: string;
@@ -21,7 +21,7 @@ interface IProps {
 }
 export const PostCard = ({
   item,
-
+  user,
   users,
   onlineUser,
   token,
@@ -34,6 +34,7 @@ export const PostCard = ({
     <div className="cardContainer">
       <TopCard
         users={users}
+        user={user}
         onlineUser={onlineUser}
         post={item}
         addFriend={addFriend}
