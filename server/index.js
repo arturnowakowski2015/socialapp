@@ -99,7 +99,7 @@ app.get("/p", verifyToken, getFeedPosts);
 app.get("/users", verifyToken, getUsers);
 app.get("/users/:userId", verifyToken, getUser);
 app.get("/:userId/posts", verifyToken, postsOfUser);
-app.get("/:friends/:set", verifyToken, getFriends);
+app.get("/friends/:set", verifyToken, getFriends);
 
 app.patch("/createcomment", verifyToken, addComment);
 

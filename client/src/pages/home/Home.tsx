@@ -28,7 +28,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
 
   const {
     posts,
-
+    refetch,
     getPostOfUser,
     doLikes,
     setInput,
@@ -66,6 +66,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
     getUsers();
     setRefreshPosts(false);
     setPostssignal(false);
+    refetch();
   }, [refreshPosts]); // eslint-disable-line react-hooks/exhaustive-deps
   const [state, dispatch] = useReducer(reducer, {
     users: [],

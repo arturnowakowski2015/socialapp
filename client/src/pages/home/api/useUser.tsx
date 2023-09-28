@@ -51,7 +51,7 @@ const useUser = (token: string) => {
     } else {
       profile?.friends.push(userid.toString());
     }
-    qC.invalidateQueries(["friends", true]);
+    qC.invalidateQueries(["friends"]);
     setProfile(profile);
   };
 

@@ -18,13 +18,10 @@ const usePost = (token: string, postssignal: boolean) => {
   const [users, setUsers] = useState<User[]>();
 
   const [post, setPost] = useState<PostInput>({} as PostInput);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["posts", postssignal],
     queryFn: () => getPostsQuery(token),
   });
-  useEffect(() => {
-    if (data) setPosts(data as Posts[]);
-  }, [data]);
 
   const mutator = useMutation({
     mutationFn: async (item: DataCreateComment) => {
@@ -36,10 +33,17 @@ const usePost = (token: string, postssignal: boolean) => {
       });
     },
   });
+  useEffect(() => {
+    if (data) setPosts(data as Posts[]);
+  }, [data]);
 
   const createComment = async (item: DataCreateComment) => {
     mutator.mutate(item);
   };
+
+  useEffect(() => {
+    setPosts(mutator.data);
+  }, [mutator.data]);
   // const createComment = async (         userid, postid, comment
   //   user: User,
   //   post: Posts,
@@ -108,13 +112,13 @@ const usePost = (token: string, postssignal: boolean) => {
   return {
     users,
     posts,
-
+    refetch,
     getPostOfUser,
     doLikes,
     setInput,
     sendPost,
     createComment,
-  } as const;
+  };
 };
 
 export { usePost };

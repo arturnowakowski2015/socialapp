@@ -16,11 +16,17 @@ export const addFriend = async (req, res) => {
     usersarr.map((t) => {
       if (t.email === email) {
         if (t.friends.indexOf(Number(userId)) != -1) {
+          console.log(
+            333333333 + "::" + JSON.stringify(t.friends) + ":::" + userId
+          );
           t.friends.splice(
             t.friends.findIndex((tt) => {
               return tt === Number(userId);
             }),
             1
+          );
+          console.log(
+            44444444 + "::" + JSON.stringify(t.friends) + ":::" + userId
           );
           flag = 0;
         } else {
@@ -29,12 +35,7 @@ export const addFriend = async (req, res) => {
         }
       }
     });
-    console.log(
-      "//////    " +
-        usersarr.filter((t) => {
-          return t.email === email && t;
-        })[0]
-    );
+
     res.status(200).json(
       usersarr.filter((t) => {
         return t.email === email && t;
@@ -85,21 +86,28 @@ export const getUser = (req, res) => {
 export const getFriends = (req, res) => {
   try {
     const { set } = req.params;
-    const setarr = set.split(",");
-    console.log(
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa          " +
-        JSON.stringify(setarr)
-    );
+    let setarr = [];
+    if (set !== undefined) setarr = set.split(",");
+
     const namearr = [];
     const resp = [];
-    usersarr.forEach((t) => {
-      setarr.map((tt) => {
-        if (tt.indexOf(t._id) !== -1 && resp.indexOf(t.email) === -1)
-          resp.push(t.email);
+    if (set !== undefined)
+      usersarr.forEach((t) => {
+        setarr.map((tt) => {
+          if (tt.indexOf(t._id) !== -1)
+            if (resp.indexOf(t.email) === -1) {
+              resp.push(t.email);
+            } else
+              resp.splice(
+                resp.findIndex((t) => {
+                  return t === t.email && t;
+                }),
+                1
+              );
+        });
       });
-    });
     console.log(
-      "aaaaaaaaaaa                aaaaaaa          " + JSON.stringify(resp)
+      "op            " + JSON.stringify(set) + ":::" + JSON.stringify(resp)
     );
     res.status(200).json(resp);
   } catch (err) {
