@@ -1,3 +1,6 @@
+import { useTokenContext } from "../../../context/tokenContext/useTokenContext";
+import { useAxios } from "./useAxios";
+//import { LoginPayload, LoginResponse } from "./login.types";
 import { useRegister } from "../../auth/api/useRegister";
 import { useLogin } from "../../auth/api/useLogin";
 import { useState, useEffect } from "react";
@@ -6,6 +9,8 @@ import { Login, User } from "../../../model/Interface";
 import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
+  const { onTokenSave } = useTokenContext();
+
   const [selectedFile, setSelectedFile] = useState<File>();
   const [token, setToken] = useState<string>("");
   const [login, setLogin] = useState<Login>({} as Login);
@@ -47,6 +52,10 @@ const useAuth = () => {
     const loggedIn = loginMutator.data?.data;
 
     if (loggedIn) {
+      onTokenSave({
+        newToken: loggedIn.token,
+        storeTokenInStorage: true,
+      });
       setLogin(loggedIn);
       setUser(loggedIn?.user?.[0]);
       setOnlineUser(loggedIn?.user?.[0]);

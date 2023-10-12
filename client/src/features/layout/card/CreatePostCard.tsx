@@ -4,13 +4,13 @@ interface IProps {
   token: string;
   onlineUser: User;
   setInput: (str: string, str2: string, onlineUser: User) => void;
-  sendPost: (token: string, onlineUser: User) => void;
+  onCreatePost: (onlineUser: User) => void;
   socket: Object;
 }
 const CreateCommentCard = ({
   token,
   setInput,
-  sendPost,
+  onCreatePost,
   onlineUser,
   socket,
 }: IProps) => {
@@ -37,7 +37,7 @@ const CreateCommentCard = ({
       </div>
       <hr></hr>
       <div className="button">
-        <button onClick={() => sendPost(token, onlineUser)}>submit</button>
+        <button onClick={() => onCreatePost(onlineUser)}>submit</button>
       </div>
     </div>
   );

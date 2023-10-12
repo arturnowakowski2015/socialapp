@@ -124,6 +124,15 @@ const fetchActionTypeSchema = z.object({
 
 export type fetchActionType = z.infer<typeof fetchActionTypeSchema>;
 
+const CreatePostType = z.object({
+  input: z.string(),
+  commentPicture: z.string(),
+  picturePath: z.string(),
+  userid: z.string(),
+});
+
+export type CreatePostType = z.infer<typeof CreatePostType>;
+
 // An interface for our actions
 export interface fetchState {
   data: JSONResult;

@@ -9,9 +9,6 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/users.js";
-import postRoutes from "./routes/posts.js";
 import { loginUser, register } from "./routes/auth.js";
 import {
   addComment,
@@ -49,7 +46,7 @@ app.use(
     ],
   })
 );
-console.clear();
+//  console.clear();
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 const serv = app.listen(3002);
 const io = new Server(serv, {
@@ -85,7 +82,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 /* REGISTER USER */
-
+console.clear();
 app.put("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
@@ -105,8 +102,6 @@ app.patch("/createcomment", verifyToken, addComment);
 
 app.patch("/:id/:userId/likes", verifyToken, doLikes);
 app.patch("/addfriend/:email/:userId", verifyToken, addFriend);
-app.patch("/createpost", verifyToken, createPost);
-
 //
 
 /* MONGOOSE SETUP */

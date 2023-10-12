@@ -32,7 +32,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
     getPostOfUser,
     doLikes,
     setInput,
-    sendPost,
+    onCreatePost,
     createComment,
   } = usePost(token, postssignal);
   const {
@@ -109,7 +109,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
       socketIo.removeListener("message_from_comments");
       socketIo.removeListener("message_from_users");
     };
-  }, [token, doLikes, sendPost, addFriend]);
+  }, [token, doLikes, onCreatePost, addFriend]);
   useEffect(() => {
     setProfile(user);
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -152,7 +152,7 @@ export const Home = ({ user, onlineUser, token }: IProps) => {
               <CreatePostCard
                 token={token}
                 setInput={setInput}
-                sendPost={sendPost}
+                onCreatePost={onCreatePost}
                 onlineUser={onlineUser}
                 socket={socket}
               />{" "}

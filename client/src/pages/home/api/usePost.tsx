@@ -3,17 +3,18 @@ import {
   User,
   PostInput,
   fetchActionSet,
-  Comment,
+  CreatePostType,
   DataCreateComment,
 } from "../../../model/Interface";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getPostsQuery, addComment } from "../../../utils/posts";
+import { usePostApi } from "../../../utils/usePostApi";
 
 import { useState } from "react";
 
 const usePost = (token: string, postssignal: boolean) => {
+  const { getPostsQuery, addComment, createPost } = usePostApi();
   const [posts, setPosts] = useState<Posts[]>([] as Posts[]);
   const [users, setUsers] = useState<User[]>();
 
@@ -22,7 +23,9 @@ const usePost = (token: string, postssignal: boolean) => {
     queryKey: ["posts", postssignal],
     queryFn: () => getPostsQuery(token),
   });
-
+  const setInput = (id: string, input: string, onlineUser: User) => {
+    setPost({ ...post, [id]: input });
+  };
   const mutator = useMutation({
     mutationFn: async (item: DataCreateComment) => {
       return await addComment({
@@ -41,57 +44,49 @@ const usePost = (token: string, postssignal: boolean) => {
     mutator.mutate(item);
   };
 
+  const mutatorCreatePost = useMutation({
+    mutationFn: async (item: CreatePostType) => {
+      return await createPost(item);
+    },
+  });
+  const onCreatePost = (onlineUser: User) => {
+    mutatorCreatePost.mutate({
+      input: post.input,
+      commentPicture: post.imagePath.split("\\")[2],
+      picturePath: onlineUser.picturePath as string,
+      userid: onlineUser._id,
+    });
+  };
+
+  useEffect(() => {
+    setPosts(mutatorCreatePost.data);
+  }, [mutatorCreatePost.data]);
+
   useEffect(() => {
     setPosts(mutator.data);
   }, [mutator.data]);
-  // const createComment = async (         userid, postid, comment
-  //   user: User,
-  //   post: Posts,
-  //   comment: string,
-  //   token: string
-  // ) => {
-  //   const response = await fetch(`http://localhost:3001/createcomment`, {
+  // const sendPost = async (token: string, onlineUser: User) => {
+  //   const response = await fetch(`http://localhost:3001/createpost`, {
   //     method: "PATCH",
   //     body: JSON.stringify({
-  //       userid: post.userId,
-  //       postid: post._id,
-  //       comment: comment,
+  //       input: post.input,
+  //       commentPicture: post.imagePath,
+  //       picturePath: onlineUser.picturePath,
+  //       userid: onlineUser._id,
   //     }),
   //     headers: {
   //       Authorization: `Bearer ${token}`,
   //       "Content-Type": "application/json",
   //     },
   //   });
-  //   const loggedIn = await response.json();
-  //   if (loggedIn) {
-  //     setPosts(loggedIn);
-  //   }
+  //   const data1 = await response.json();
+
+  //   console.log(
+  //     "rrrrrrrrrrrrrrrrrrrrrrrrrrr               " + JSON.stringify(data1)
+  //   );
+  //   setPosts(data1);
   // };
 
-  const sendPost = async (token: string, onlineUser: User) => {
-    const response = await fetch(`http://localhost:3001/createpost`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        input: post.input,
-        commentPicture: post.imagePath,
-        picturePath: onlineUser.picturePath,
-        userid: onlineUser._id,
-      }),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    const data1 = await response.json();
-
-    console.log(
-      "rrrrrrrrrrrrrrrrrrrrrrrrrrr               " + JSON.stringify(data1)
-    );
-    setPosts(data1);
-  };
-  const setInput = (id: string, input: string, onlineUser: User) => {
-    setPost({ ...post, [id]: input });
-  };
   const doLikes = async (postid: number, token: string, userid?: number) => {
     const response = await fetch(
       `http://localhost:3001/${postid}/${userid}/likes`,
@@ -116,7 +111,7 @@ const usePost = (token: string, postssignal: boolean) => {
     getPostOfUser,
     doLikes,
     setInput,
-    sendPost,
+    onCreatePost,
     createComment,
   };
 };

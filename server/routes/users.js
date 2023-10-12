@@ -106,9 +106,9 @@ export const getFriends = (req, res) => {
               );
         });
       });
-    console.log(
-      "op            " + JSON.stringify(set) + ":::" + JSON.stringify(resp)
-    );
+    // console.log(
+    //   "op            " + JSON.stringify(set) + ":::" + JSON.stringify(resp)
+    // );
     res.status(200).json(resp);
   } catch (err) {
     res.status(404).json({ message: err.message });

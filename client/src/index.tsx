@@ -6,6 +6,7 @@ import { App } from "./pages/app";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { AppProviders } from "./appproviders";
 const queryClient = new QueryClient({});
 
 const root = ReactDOM.createRoot(
@@ -14,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <AppProviders>
+        <App />
+      </AppProviders>
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   </BrowserRouter>

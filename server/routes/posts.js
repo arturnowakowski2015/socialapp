@@ -7,6 +7,7 @@ export const createPost = async (req, res) => {
   let uid = 0;
   try {
     const { input, commentPicture, picturePath, userid } = req.body;
+
     uid = userid;
     posts.unshift({
       _id: Math.floor(Math.random() * 100000),
@@ -15,7 +16,7 @@ export const createPost = async (req, res) => {
       lastName: "Doe",
       location: "Utah, CA",
       description: input,
-      picturePath: commentPicture.split("\\")[2],
+      picturePath: commentPicture,
       userPicturePath: picturePath,
       likes: [],
       comments: [],
